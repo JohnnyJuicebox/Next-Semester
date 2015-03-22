@@ -13,7 +13,7 @@ import time
 #http://www.ratemyprofessors.com/find/professor/?queryoption=TEACHER&page=1&sortBy=&sid=668&department=&query=%2A%253A%2A&queryBy=schoolId&institution=New%2BJersey%2BInstitute%2Bof%2BTechnology
 
 
-pageNum = 53
+pageNum = 1
 
 professorList = []
 url = "http://www.ratemyprofessors.com/find/professor/?department=&"
@@ -50,4 +50,4 @@ while True:
 
 	pageNum += 1 #Increment page number
 profList = json.dumps(professorList)
-print json.dumps(professorList, indent=2);
+print json.dumps(professorList);

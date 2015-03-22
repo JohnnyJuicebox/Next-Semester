@@ -2,7 +2,20 @@ from bs4 import BeautifulSoup
 import json
 import requests
 import sys
+import time
 
+def get_subject_list(url):
+	req = requests.get(url);
+	soup = BeautifulSoup(req.text);
+	
+	atags = soup.find_all("a");
+	subjectLst = [];
+	for atag in atags:
+		if(atag.has_attr("href")):
+			subjectLst.append(atag["href"]);
+
+	return subjectLst;
+	
 def clean_lst(lst):
     for index in range(0, len(lst)):
         data = lst[index].get_text();
@@ -184,16 +197,26 @@ def parse_course_schedule_subpage(url):
 
 def main():
 
-    url = 'http://www.njit.edu/registrar/schedules/courses/spring/2015S.';
+    url = 'http://www.njit.edu/registrar/schedules/courses/spring/index_list.html';
+    homeUrl = 'http://www.njit.edu/registrar/schedules/courses/spring/';
+    subjLst = get_subject_list(url);
+    #if(len(sys.argv) == 1):
+    #    print 'Error: Need one command line argument';
+    #    sys.exit(1);
+    #subject = sys.argv[1];
+    #url = url + subject + '.html';
+  
+    for subj in subjLst:
+		subjUrl = homeUrl + subj;
+		lst = parse_course_schedule_subpage(subjUrl);
+		subject = subj.split(".")[1];
+		fold = "jsonFiles/";
+		fname = fold + subject + ".json";
+		f = open(fname, "w");
+		f.write(json.dumps(lst));
+		f.close();	
+		time.sleep(5);
 
-    if(len(sys.argv) == 1):
-        print 'Error: Need one command line argument';
-        sys.exit(1);
-    subject = sys.argv[1];
-    url = url + subject + '.html';
-    lst = parse_course_schedule_subpage(url);
-    dct = { 'Info' : lst , 'Subject' : subject };
-    print json.dumps(dct, indent = 2);
     return;
 
 if __name__ == '__main__':
