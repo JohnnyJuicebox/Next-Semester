@@ -48,10 +48,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
+			'host'      => '127.0.0.1',
 			'database'  => 'nextsemester',
 			'username'  => 'root',
-			'password'  => '',  
+			'password'  => 'welcome',  
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
