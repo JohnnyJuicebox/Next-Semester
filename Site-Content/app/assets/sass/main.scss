@@ -1,4 +1,23 @@
 body {
-	padding-top: 70px;
+	background: none repeat scroll 0% 0% #FFF;
+	height:100%;
+    width:100%;
 }
-	
+.off-canvas-wrap,.inner-wrap{
+    height:100%;   
+}
+.page{
+    height:100%;   
+}
+
+.home-panel{
+	margin-top: 20px;
+}
+
+.right-menu {
+    top: 0px;
+    right: 25px;
+    position: absolute;
+    height: 2.8125rem;
+    width: 2.8125rem;
+}

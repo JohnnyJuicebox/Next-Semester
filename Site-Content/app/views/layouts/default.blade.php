@@ -11,22 +11,24 @@
 
   </head>
   <body>
-	<div class="off-canvas-wrap" data-offcanvas>
-		<div class="inner-wrap"> 
-			
-			@include('layouts.partials.nav') <!-- Top Nav Bar and Side Menu -->
+  	<div class="page">
+		<div class="off-canvas-wrap" data-offcanvas>
+			<div class="inner-wrap"> 
+				
+				@include('layouts.partials.nav') <!-- Top Nav Bar and Side Menu -->
 
-			<section class="main-section"> <!-- Main Content -->
-				<div class="row">
-					<div class="small-12">
-						@yield('content')
+				<section class="main-section"> <!-- Main Content -->
+					<div class="row">
+						<div class="small-12">
+							@yield('content')
+						</div>
 					</div>
-				</div>
-			</section> <!-- End Main Content -->
+				</section> <!-- End Main Content -->
 
-			<a class="exit-off-canvas"></a> 
-		</div> <!-- End Inner Wrapper -->
-	</div> <!-- End Main Canvas -->
+				<a class="exit-off-canvas"></a> 
+			</div> <!-- End Inner Wrapper -->
+		</div> <!-- End Main Canvas -->
+	</div>
     {{ HTML::script('js/vendor/jquery.js'); }}
     {{ HTML::script('js/foundation/foundation.js'); }}
     {{ HTML::script('js/foundation/foundation.offcanvas.js'); }}

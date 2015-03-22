@@ -1,10 +1,10 @@
 <nav class="tab-bar">
 	<section class="left tab-bar-section"> 
-		<h1 class="title">NextSemester</h1> 
+		<a href="/"><h1 class="title">NextSemester</h1></a>
 	</section> 
-	<section class="right-small"> 
-		<a class="right-off-canvas-toggle menu-icon" href="#"><span></span></a>
-	</section> 
+	<section class="right-menu"> 
+		<a class="right-off-canvas-toggle" href="#"><h1 class="title">Menu</h1></a>
+	</section>
 </nav><!-- Nav Header End -->
 
 <aside class="right-off-canvas-menu"> <!-- Right-Side Menu -->
@@ -17,3 +17,4 @@
 		<li><a href="#">Settings</a></li>
 	</ul> 
 </aside> <!-- Right-Side Menu End -->
+
