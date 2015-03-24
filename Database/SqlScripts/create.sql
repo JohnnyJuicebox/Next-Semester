@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS instructor (
     id INT(8) NOT NULL AUTO_INCREMENT,
     fname VARCHAR(30),
     lname VARCHAR(30),
-    rating FLOAT,
+    rating FLOAT DEFAULT -1.0,
+    dept VARCHAR(30),
     link VARCHAR(100),
     CONSTRAINT pk_instructor_id PRIMARY KEY(id)
 ) ENGINE=InnoDB;
@@ -40,13 +41,14 @@ CREATE TABLE IF NOT EXISTS course (
     id INT(8) NOT NULL AUTO_INCREMENT,
     cname VARCHAR(12) NOT NULL,
     cdesc VARCHAR(40),
-    CONSTRAINT pk_course_id PRIMARY KEY(id)
+    CONSTRAINT pk_course_id PRIMARY KEY(id),
+    CONSTRAINT uk_course_name UNIQUE KEY(cname)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS section (
     id INT(8) NOT NULL AUTO_INCREMENT,
     sec_no CHAR(3),
-    callnumber MEDIUMINT,
+    callnumber MEDIUMINT NOT NULL,
     status VARCHAR(20),
     maxCap SMALLINT,
     currentCap SMALLINT,
@@ -54,6 +56,7 @@ CREATE TABLE IF NOT EXISTS section (
     instructorId INT(8),
     courseId INT(8),
     CONSTRAINT pk_section_id PRIMARY KEY(id),
+    CONSTRAINT uk_section_cnum UNIQUE KEY(callnumber),
     CONSTRAINT fk_sec_instructor_id
         FOREIGN KEY(instructorId)
         REFERENCES instructor(id)

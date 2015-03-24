@@ -7,7 +7,7 @@ import time
 def get_subject_list(url):
 	req = requests.get(url);
 	soup = BeautifulSoup(req.text);
-	
+
 	atags = soup.find_all("a");
 	subjectLst = [];
 	for atag in atags:
@@ -15,7 +15,7 @@ def get_subject_list(url):
 			subjectLst.append(atag["href"]);
 
 	return subjectLst;
-	
+
 def clean_lst(lst):
     for index in range(0, len(lst)):
         data = lst[index].get_text();
@@ -121,6 +121,9 @@ def parse_course_schedule_subpage(url):
                     del dInfo['time'];
                     dInfo['startTime'] = startTime;
                     dInfo['endTime'] = endTime;
+                else:
+                    del dInfo['time'];
+
 
                 dlst.append(dInfo);
                 dct['dayTimesInfo'] = dlst;
@@ -148,6 +151,8 @@ def parse_course_schedule_subpage(url):
                     del dInfo['time'];
                     dInfo['startTime'] = startTime;
                     dInfo['endTime'] = endTime;
+                else:
+                    del dInfo['time'];
                 dlst.append(dInfo);
 
                 dct['dayTimesInfo'] = dlst;
@@ -180,6 +185,8 @@ def parse_course_schedule_subpage(url):
                         del dInfo['time'];
                         dInfo['startTime'] = startTime;
                         dInfo['endTime'] = endTime;
+                    else:
+                        del dInfo['time'];
                     dlst.append(dInfo);
                     dInfo = {};
 
@@ -205,7 +212,7 @@ def main():
     #    sys.exit(1);
     #subject = sys.argv[1];
     #url = url + subject + '.html';
-  
+
     for subj in subjLst:
 		subjUrl = homeUrl + subj;
 		lst = parse_course_schedule_subpage(subjUrl);
@@ -214,7 +221,7 @@ def main():
 		fname = fold + subject + ".json";
 		f = open(fname, "w");
 		f.write(json.dumps(lst));
-		f.close();	
+		f.close();
 		time.sleep(5);
 
     return;
