@@ -1,18 +1,28 @@
 <?php
 
 use NextSemester\Forms\RegistrationForm;
+use NextSemester\Registration\RegisterUserCommand;
+use NextSemester\Core\CommandBus;
 
-class RegistrationController extends \BaseController {
+class RegistrationController extends BaseController {
 
+	use CommandBus;
 
    /**
-	* @var RegistrationForm
+	* @var RegistrationForm 
 	*/
 	private $registrationForm;
 
+	/**  
+	 * Constructor
+	 *
+	 * @param RegistrationForm $registrationForm
+	 */
 	function __construct(RegistrationForm $registrationForm)
 	{
 		$this->registrationForm = $registrationForm;
+
+		$this->beforeFilter('guest');
 	}
 
 
@@ -33,16 +43,20 @@ class RegistrationController extends \BaseController {
 	 */
 	public function store()
 	{
-	
-		$this->registrationForm->validate(Input::all());	
+		$this->registrationForm->validate(Input::all());
 
-		$user = User::create(
-			Input::only('username', 'email', 'password')
+		extract(Input::only('username', 'email', 'password'));
+
+		$user = $this->execute(
+			new RegisterUserCommand($username, $email, $password)
 		);
+
 
 		Auth::login($user);
 
-		return Redirect::home();
+		Flash::success('Glad to have you as a new NextSemester member!');
+
+		return Redirect::home()->with('flash_messge', "Welcome aboard!");
 	}
 
 }

@@ -10,7 +10,9 @@
 	<br>
 	<h4>To get started please sign in or register for a new account.</h4>
 
-	{{ link_to_route('register_path', 'Sign Up', null, ['class' => 'button radius']) }}
+	@if ( ! $currentUser)
+		{{ link_to_route('register_path', 'Sign Up', null, ['class' => 'button radius']) }}
+	@endif
 </div>
 
 @stop

@@ -36,3 +36,42 @@ body {
 .panel.alert li{
     color: #A94442;
 }
+
+.caret{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 5px;
+    border-color: transparent transparent transparent rgba(255, 255, 255, 0.5);
+    border-left-style: solid;
+    margin-top: -4.5px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    padding-right: 5px;
+}
+.right-menu {
+      /* top: 0px; */
+      right: 0px;
+      position: absolute;
+      /* height: 2.8125rem; */
+      width: auto;
+      padding-right: 25px;
+}
+
+.button.login {
+    padding: 0.575rem 1.05rem 0.575rem;
+    font-size: 0.9875rem;
+}
+/* Playing around with highlighting text on hover */
+.highlight:hover {
+    color: rgba(255, 230, 0, 0.5);
+    padding: 3px 5px;
+    margin: -3px -5px;
+    line-height: 1.7;
+    border-radius: 3px;
+    display:inline-block;
+}
+
+

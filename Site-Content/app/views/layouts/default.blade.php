@@ -19,7 +19,9 @@
 
 				<section class="main-section"> <!-- Main Content -->
 					<div class="row">
-						<div class="small-12">
+						<div class="small-12 columns">
+              @include('flash::message')
+
 							@yield('content')
 						</div>
 					</div>
@@ -32,6 +34,7 @@
     {{ HTML::script('js/vendor/jquery.js'); }}
     {{ HTML::script('js/foundation/foundation.js'); }}
     {{ HTML::script('js/foundation/foundation.offcanvas.js'); }}
+    {{ HTML::script('js/foundation/foundation.alert.js'); }}
     
     <script>
       $(document).foundation();

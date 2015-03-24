@@ -2,9 +2,16 @@
 	<section class="left tab-bar-section"> 
 		<a href="/"><h1 class="title">NextSemester</h1></a>
 	</section> 
-	<section class="right-menu"> 
-		<a class="right-off-canvas-toggle" href="#"><h1 class="title">Menu</h1></a>
+	
+	<section class="right-menu">
+		@if ($currentUser)
+			<a class="right-off-canvas-toggle" href="#"><h1 class="title">{{ $currentUser->username }}</h1></a>
+			<span class="caret"></span>
+		@else
+			<a href="#" class="login button radius">Log In</a>
+		@endif
 	</section>
+	
 </nav><!-- Nav Header End -->
 
 <aside class="right-off-canvas-menu"> <!-- Right-Side Menu -->
