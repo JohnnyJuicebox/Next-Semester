@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS instructor (
     rating FLOAT DEFAULT -1.0,
     dept VARCHAR(30),
     link VARCHAR(100),
-    CONSTRAINT pk_instructor_id PRIMARY KEY(id)
+    CONSTRAINT pk_instructor_id PRIMARY KEY(id),
+    CONSTRAINT uk_instructor_link UNIQUE KEY(link)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS course (
@@ -68,13 +69,12 @@ CREATE TABLE IF NOT EXISTS section (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS section_days (
-    id INT(8) NOT NULL AUTO_INCREMENT,
     sectionId INT(8),
     day VARCHAR(6),
     startTime TIME,
     endTime TIME,
     roomInfo VARCHAR(20),
-    CONSTRAINT pk_section_days_id PRIMARY KEY(id),
+    CONSTRAINT pk_section_days_id PRIMARY KEY(sectionId, day, startTime, endTime),
     CONSTRAINT fk_section_id
         FOREIGN KEY(sectionId)
         REFERENCES section(id)

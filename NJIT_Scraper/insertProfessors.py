@@ -11,9 +11,9 @@ db=MySQLdb.connect(host="localhost", user="root", passwd="welcome", db="NextSeme
 cur = db.cursor();
 
 for d in data:
-	
-	fname = d["tFname"].strip().capitalize();	
-	lname = d["tLname"].strip().capitalize();	
+
+	fname = d["tFname"].strip().capitalize();
+	lname = d["tLname"].strip().capitalize();
 	dept = d["tDept"].strip();
 	rating = d["overall_rating"];
 	link = d["tid"];
@@ -28,9 +28,13 @@ for d in data:
 	sql = sql + str(rating) + ",";
 	sql = sql + "\"" + str(link) + "\"" + ")";
 
-	print sql;	
-	cur.execute(sql);
-	db.commit();
+
+	try:
+		cur.execute(sql);
+		db.commit();
+		print sql;
+	except MySQLdb.IntegrityError as err:
+		print "Tuple exists";
 
 cur.close();
 db.close();
