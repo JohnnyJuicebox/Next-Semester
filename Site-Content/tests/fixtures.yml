@@ -1,0 +1,5 @@
+NextSemester\Users\User:
+ username: $string
+ email: $string@example.com
+ password: $string
+ created_at: $date
