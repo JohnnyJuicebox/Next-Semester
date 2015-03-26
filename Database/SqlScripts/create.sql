@@ -1,7 +1,7 @@
 USE NextSemester;
 
 CREATE TABLE IF NOT EXISTS users (
-    id INT(8) NOT NULL AUTO_INCREMENT,
+    id INT(11) NOT NULL AUTO_INCREMENT,
     fname       VARCHAR(30),
     lname       VARCHAR(30),
     username    VARCHAR(50),
@@ -16,19 +16,19 @@ CREATE TABLE IF NOT EXISTS users (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS login_info (
-    id INT(8) NOT NULL AUTO_INCREMENT,
-    user_id INT(8) NOT NULL,
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    user_id INT(11) NOT NULL,
     login_time DATETIME NOT NULL,
     logout_time DATETIME,
     CONSTRAINT pk_login_id PRIMARY KEY(id),
     CONSTRAINT fk_logininfo_uid
         FOREIGN KEY(user_id)
-        REFERENCES Users(id)
+        REFERENCES users(id)
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS instructor (
-    id INT(8) NOT NULL AUTO_INCREMENT,
+    id INT(11) NOT NULL AUTO_INCREMENT,
     fname VARCHAR(30),
     lname VARCHAR(30),
     rating FLOAT DEFAULT -1.0,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS instructor (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS course (
-    id INT(8) NOT NULL AUTO_INCREMENT,
+    id INT(11) NOT NULL AUTO_INCREMENT,
     cname VARCHAR(12) NOT NULL,
     cdesc VARCHAR(40),
     CONSTRAINT pk_course_id PRIMARY KEY(id),
@@ -47,15 +47,15 @@ CREATE TABLE IF NOT EXISTS course (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS section (
-    id INT(8) NOT NULL AUTO_INCREMENT,
+    id INT(11) NOT NULL AUTO_INCREMENT,
     sec_no CHAR(3),
     callnumber MEDIUMINT NOT NULL,
     status VARCHAR(20),
     maxCap SMALLINT,
     currentCap SMALLINT,
     credits FLOAT,
-    instructorId INT(8),
-    courseId INT(8),
+    instructorId INT(11),
+    courseId INT(11),
     CONSTRAINT pk_section_id PRIMARY KEY(id),
     CONSTRAINT uk_section_cnum UNIQUE KEY(callnumber),
     CONSTRAINT fk_sec_instructor_id
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS section (
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS section_days (
-    sectionId INT(8),
+    sectionId INT(11),
     day VARCHAR(6),
     startTime TIME,
     endTime TIME,
@@ -81,3 +81,27 @@ CREATE TABLE IF NOT EXISTS section_days (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+CREATE TABLE schedule (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	Name varchar(25) NOT NULL,
+	user_id int(11) NOT NULL,
+	PRIMARY KEY (id),
+	CONSTRAINT fk_UserSchedule 
+		FOREIGN KEY (user_id) 
+		REFERENCES users (id) 
+		ON DELETE CASCADE 
+) ENGINE=InnoDB;
+
+CREATE TABLE sche_sec_rel (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	schedule_id int(11) NOT NULL,
+	section_id int(11) NOT NULL,
+	time_added timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	CONSTRAINT fk_SsrSche FOREIGN KEY (schedule_id) 
+		REFERENCES schedule(id) 
+		ON DELETE CASCADE
+  	CONSTRAINT fk_SsrSec FOREIGN KEY (section_id) 
+		REFERENCES section(id) 
+		ON DELETE CASCADE 
+) ENGINE=InnoDB;

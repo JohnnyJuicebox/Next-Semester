@@ -1,6 +1,8 @@
-DROP TABLE section_days;
-DROP TABLE section;
-DROP TABLE course;
-DROP TABLE login_info;
-DROP TABLE instructor;
-DROP TABLE users;
+DROP TABLE IF EXISTS sche_sec_rel;
+DROP TABLE IF EXISTS schedule;
+DROP TABLE IF EXISTS section_days;
+DROP TABLE IF EXISTS section;
+DROP TABLE IF EXISTS course;
+DROP TABLE IF EXISTS login_info;
+DROP TABLE IF EXISTS instructor;
+DROP TABLE IF EXISTS users;
