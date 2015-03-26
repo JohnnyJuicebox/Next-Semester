@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS section_days (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE schedule (
+CREATE TABLE IF NOT EXISTS schedule (
 	id int(11) NOT NULL AUTO_INCREMENT,
 	Name varchar(25) NOT NULL,
 	user_id int(11) NOT NULL,
@@ -92,16 +92,16 @@ CREATE TABLE schedule (
 		ON DELETE CASCADE 
 ) ENGINE=InnoDB;
 
-CREATE TABLE sche_sec_rel (
+CREATE TABLE IF NOT EXISTS sche_sec_rel (
 	id int(11) NOT NULL AUTO_INCREMENT,
 	schedule_id int(11) NOT NULL,
 	section_id int(11) NOT NULL,
 	time_added timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id),
-	CONSTRAINT fk_SsrSche FOREIGN KEY (schedule_id) 
+	CONSTRAINT fk_schedule_section_sch_id FOREIGN KEY (schedule_id) 
 		REFERENCES schedule(id) 
-		ON DELETE CASCADE
-  	CONSTRAINT fk_SsrSec FOREIGN KEY (section_id) 
+		ON DELETE CASCADE,
+  	CONSTRAINT fk_schedule_section_sec_id FOREIGN KEY (section_id) 
 		REFERENCES section(id) 
 		ON DELETE CASCADE 
 ) ENGINE=InnoDB;
