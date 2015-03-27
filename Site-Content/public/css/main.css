@@ -59,10 +59,19 @@ body {
   font-size: 0.9875rem; }
 
 /* Playing around with highlighting text on hover */
-.highlight:hover {
-  color: rgba(255, 230, 0, 0.5);
-  padding: 3px 5px;
-  margin: -3px -5px;
-  line-height: 1.7;
+a.nav-link {
+  color: #FEFEFE;
+  text-decoration: none;
+  font-weight: bold;
+  line-height: inherit; }
+
+a.nav-link:first-of-type {
+  margin: -3px 15px; }
+
+a.nav-link:hover {
+  color: #C4C4C4;
   border-radius: 3px;
-  display: inline-block; }
+  line-height: inherit; }
+
+.nav-logo {
+  font-size: 1.125rem; }

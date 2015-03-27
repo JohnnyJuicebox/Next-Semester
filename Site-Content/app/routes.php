@@ -57,3 +57,12 @@ Route::get('logout', [
  */
 Route::get('statuses', 'StatusController@index');
 
+/**
+ * Schedule
+ */
+Route::get('schedules', [
+	'as' => 'schedule_path',
+	'uses' => 'ScheduleController@index'
+]);
+
+
