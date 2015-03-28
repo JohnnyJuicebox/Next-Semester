@@ -7,8 +7,11 @@
     <!-- CSS and JS asset calls -->
     {{ HTML::style('css/foundation.css'); }}
     {{ HTML::style('css/main.css'); }}
+    {{ HTML::style('css/fullcalendar.css'); }}
+    {{ HTML::script('js/moment.min.js'); }}
+    {{ HTML::script('js/jquery.min.js'); }}
+    {{ HTML::script('js/fullcalendar.min.js'); }}
     {{ HTML::script('js/vendor/modernizr.js'); }}
-
   </head>
   <body>
   	<div class="page">
@@ -31,7 +34,7 @@
 			</div> <!-- End Inner Wrapper -->
 		</div> <!-- End Main Canvas -->
 	</div>
-    {{ HTML::script('js/vendor/jquery.js'); }}
+    <!-- {{ HTML::script('js/vendor/jquery.js'); }} -->
     {{ HTML::script('js/foundation/foundation.js'); }}
     {{ HTML::script('js/foundation/foundation.offcanvas.js'); }}
     {{ HTML::script('js/foundation/foundation.alert.js'); }}

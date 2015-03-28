@@ -9,7 +9,31 @@ class ScheduleController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('schedules.create');
+		$events = [];
+
+		$events[] = Calendar::event(
+		    'Event One', //event title
+		    false, //full day event?
+		    '2015-03-11T0800', //start time (you can also use Carbon instead of DateTime)
+		    '2015-03-12T0800' //end time (you can also use Carbon instead of DateTime)
+		);
+
+		$events[] = Calendar::event(
+		    "Valentine's Day", //event title
+		    true, //full day event?
+		    new DateTime('2015-03-14'), //start time (you can also use Carbon instead of DateTime)
+		    new DateTime('2015-03-14') //end time (you can also use Carbon instead of DateTime)
+		);
+
+		//EventModel implements MaddHatter\LaravelFullcalendar\Event
+
+		$calendar = Calendar::addEvents($events) //add an array with addEvents
+		    ->setOptions([ //set fullcalendar options
+		        'firstDay' => 1,
+		        'defaultView' => 'agendaWeek'
+		    ]); 
+
+			return View::make('schedules.create', compact('calendar'));
 	}
 
 
