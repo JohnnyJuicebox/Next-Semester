@@ -34,7 +34,8 @@ for d in data:
 		db.commit();
 		print sql;
 	except MySQLdb.IntegrityError as err:
-		print "Tuple exists";
+		pass;
+		#print "Tuple exists";
 
 cur.close();
 db.close();

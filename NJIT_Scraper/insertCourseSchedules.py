@@ -88,9 +88,10 @@ for f in onlyfiles:
         		cur.execute("INSERT INTO section (sec_no, credits, callnumber, status, maxCap, currentCap, courseId) VALUES (\"%s\", '%d', '%d', \"%s\", '%d', '%d', '%d')" % (secNum, credits, callNumber, status, maxCap, curCap, course_id));
         		db.commit();
         except MySQLdb.IntegrityError as err:
-        	print "Call Number: " + str(callNumber);
+        	pass;
+        	#print "Call Number: " + str(callNumber);
 
-        print "Call Number: " + str(callNumber);
+        #print "Call Number: " + str(callNumber);
         nrows = cur.execute("SELECT id FROM section WHERE callnumber = '%d'" % (callNumber));
         if(nrows != 0):
         	results = cur.fetchall();
@@ -120,7 +121,8 @@ for f in onlyfiles:
                     cur.execute("INSERT INTO section_days (day, startTime, endTime, roomInfo, sectionId) VALUES ('%s', '%s', '%s', '%s', '%d')" % (schoolDays[ind], startTime, endTime, roomInfo, secId));
                     db.commit();
                 except MySQLdb.IntegrityError as err:
-                    print(str(callNumber) + "\t" + str(secId) + "\t" + schoolDays[ind] + "\t" + str(startTime) + "\t" + str(endTime));
+                    pass;
+                    #print(str(callNumber) + "\t" + str(secId) + "\t" + schoolDays[ind] + "\t" + str(startTime) + "\t" + str(endTime));
     data_file.close();
 cur.close();
 db.close();

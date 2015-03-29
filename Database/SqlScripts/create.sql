@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS instructor (
 CREATE TABLE IF NOT EXISTS course (
     id INT(11) NOT NULL AUTO_INCREMENT,
     cname VARCHAR(12) NOT NULL,
-    cdesc VARCHAR(40),
+    cdesc VARCHAR(50),
+    cinfo BLOB,
     CONSTRAINT pk_course_id PRIMARY KEY(id),
     CONSTRAINT uk_course_name UNIQUE KEY(cname)
 ) ENGINE=InnoDB;
@@ -86,22 +87,21 @@ CREATE TABLE IF NOT EXISTS schedule (
 	Name varchar(25) NOT NULL,
 	user_id int(11) NOT NULL,
 	PRIMARY KEY (id),
-	CONSTRAINT fk_UserSchedule 
-		FOREIGN KEY (user_id) 
-		REFERENCES users (id) 
-		ON DELETE CASCADE 
+	CONSTRAINT fk_UserSchedule
+		FOREIGN KEY (user_id)
+		REFERENCES users (id)
+		ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS sche_sec_rel (
-	id int(11) NOT NULL AUTO_INCREMENT,
 	schedule_id int(11) NOT NULL,
 	section_id int(11) NOT NULL,
 	time_added timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (id),
-	CONSTRAINT fk_schedule_section_sch_id FOREIGN KEY (schedule_id) 
-		REFERENCES schedule(id) 
+	CONSTRAINT fk_schedule_section_sch_id FOREIGN KEY (schedule_id)
+		REFERENCES schedule(id)
 		ON DELETE CASCADE,
-  	CONSTRAINT fk_schedule_section_sec_id FOREIGN KEY (section_id) 
-		REFERENCES section(id) 
-		ON DELETE CASCADE 
+  	CONSTRAINT fk_schedule_section_sec_id FOREIGN KEY (section_id)
+		REFERENCES section(id)
+		ON DELETE CASCADE,
+	PRIMARY KEY (schedule_id, section_id)
 ) ENGINE=InnoDB;
