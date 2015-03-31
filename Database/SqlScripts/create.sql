@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS instructor (
 CREATE TABLE IF NOT EXISTS course (
     id INT(11) NOT NULL AUTO_INCREMENT,
     cname VARCHAR(12) NOT NULL,
-    cdesc VARCHAR(50),
+    cdesc VARCHAR(40),
     cinfo BLOB,
     CONSTRAINT pk_course_id PRIMARY KEY(id),
     CONSTRAINT uk_course_name UNIQUE KEY(cname)
