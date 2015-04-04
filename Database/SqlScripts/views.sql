@@ -30,3 +30,9 @@ SELECT DISTINCT(cname), cdesc
 FROM course JOIN section
 WHERE course.id = section.courseId;
 
+CREATE VIEW course_sections AS
+select course.cname, section.id, section.sec_no, instructor.fname, instructor.lname, instructor.rating, instructor.link
+from course JOIN section JOIN instructor
+WHERE section.courseId = course.id
+and instructor.id = section.instructorId;
+

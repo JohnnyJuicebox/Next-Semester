@@ -6,10 +6,11 @@ CREATE TABLE IF NOT EXISTS users (
     lname       VARCHAR(30),
     username    VARCHAR(50),
     password    CHAR(60),
+    remember_token VARCHAR(255),
     email       VARCHAR(50),
     major       VARCHAR(50),
-    created_at  DATETIME,
-    updated_at  DATETIME,
+    created_at  DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    updated_at  DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     CONSTRAINT pk_user_id PRIMARY KEY(id),
     CONSTRAINT uk_email UNIQUE KEY(email),
     CONSTRAINT uk_username UNIQUE KEY(username)

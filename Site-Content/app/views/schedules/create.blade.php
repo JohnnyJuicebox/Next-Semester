@@ -8,5 +8,4 @@
     		{{ $calendar->script() }}
 		</div>
 	</div>
-
 @stop
