@@ -106,10 +106,9 @@ $(document).ready(function(){
 		]
 	});
 
-	var courseArray = [];
 	$("button").click(function(){
 		var cname = $("input[name=courseName]").val();
-		var url = "http://localhost/searchCourse/" + cname;
+		var url = "searchCourse/" + cname;
 		$.getJSON(url, function(json){
 
 			$(".sections").empty();
@@ -119,12 +118,8 @@ $(document).ready(function(){
 				var sname = '<input type="radio" name="secName" value="'+ val["id"] +'"/>  ' + val["sec_no"] + "<br/>"; 
 				$(".sections").append(sname);
 			});
-			// $("input[name='secName']").on("click", function(){
-			// 		$.post("")
 
-			// });
-
-			var secUrl = 'http://localhost/searchCourse/section/';
+			var secUrl = 'searchCourse/section/';
 			var secID = -1;
 
 			$("input[name=secName]").on("click", function(){
