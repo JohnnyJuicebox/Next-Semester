@@ -1,5 +1,4 @@
 Site-Content/bootstrap/compiled.php
-Site-Content/vendor
 Site-Content/composer.phar
 Site-Content/composer.lock
 .env.*.php
