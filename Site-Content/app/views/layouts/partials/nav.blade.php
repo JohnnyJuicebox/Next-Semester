@@ -5,7 +5,7 @@
 	
 	<div class="right-menu">
 		@if ($currentUser)
-			<a class="right-off-canvas-toggle" href="#"><h1 class="title">{{ $currentUser->username }}</h1><span class="caret"></span></a>
+			<a class="right-off-canvas-toggle" href="#"><h1 class="title">{{ $currentUser->username }}<span class="caret"></span></h1></a>
 			
 		@else
 			{{ link_to_route('register_path', 'Sign Up', null, ['class' => 'nav-space login nav-link']) }}

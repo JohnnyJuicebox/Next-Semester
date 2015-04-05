@@ -4,7 +4,7 @@ import requests
 import json
 #import sys
 
-url = 'http://catalog.njit.edu/undergraduate/programs/computerscience.php';
+url = 'http://catalog.njit.edu/undergraduate/programs/electricalengineering.php';
 req = requests.get(url);
 
 soup = BeautifulSoup(req.text);
@@ -29,7 +29,4 @@ for span in spanlst:
 			if(span.contents):
 				if(type(span.contents[0]) is element.NavigableString):
 					courselst.append(span.contents[0]);
-
-
-print json.dumps(mainlst, indent=2)
-
+print json.dumps(mainlst)

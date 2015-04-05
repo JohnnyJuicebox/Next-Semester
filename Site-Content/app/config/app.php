@@ -125,6 +125,7 @@ return array(
 		'Laracasts\Commander\CommanderServiceProvider',
 		'Laracasts\Validation\ValidationServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
+		'MaddHatter\LaravelFullcalendar\ServiceProvider',
 	),
 
 	/*
@@ -192,7 +193,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Flash'			  => 'Laracasts\Flash\Flash',
-
+		'Calendar' => 'MaddHatter\LaravelFullcalendar\Facades\Calendar',
 	),
 
 );

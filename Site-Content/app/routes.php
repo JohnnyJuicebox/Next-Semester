@@ -33,7 +33,7 @@ Route::post('register', [
 	'as' => 'register_path',
 	'uses' => 'RegistrationController@store'
 ]);
- 
+
 /**
  * Sessions
  */
@@ -65,4 +65,27 @@ Route::get('schedules', [
 	'uses' => 'ScheduleController@index'
 ]);
 
+Route::get('/courses', [
+    'as' => 'courses_path',
+    'uses' => 'CurrentCoursesController@index'
+]);
 
+Route::get('/searchCourse', [
+	'as' => 'searchCourse_all',
+	'uses' => 'SearchController@index'
+]);
+
+Route::get('/searchCourse/{cname}', [
+	'as' => 'searchCourseCname',
+	'uses' => 'SearchController@course'
+]);
+
+Route::get('/searchCourse/section/{sid}', [
+	'as' => 'searchCourseCname',
+	'uses' => 'SearchController@course_section'
+]);
+
+Route::get('/addSection', [
+	'as' => 'add_section_path',
+	'uses' => 'SectionController@index'
+]);

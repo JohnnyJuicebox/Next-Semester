@@ -49,9 +49,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => '127.0.0.1',
-			'database'  => 'nextsemester',
+			'database'  => 'NextSemester',
 			'username'  => 'root',
-			'password'  => 'welcome',  
+			'password'  => 'welcome',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
