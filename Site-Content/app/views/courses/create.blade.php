@@ -92,7 +92,6 @@ function getCorrespondingDay(day){
 	}
 }
 $(document).ready(function(){
-	//$('fc-day-header').val($('.fc-day-header').val().substr(0, 3));
 	$('#calendar').fullCalendar({
 		header: {
 			left: '',
@@ -110,7 +109,6 @@ $(document).ready(function(){
 		var cname = $("input[name=courseName]").val();
 		var url = "searchCourse/" + cname;
 		$.getJSON(url, function(json){
-
 			$(".sections").empty();
 			var today = new Date();
 			
@@ -134,7 +132,7 @@ $(document).ready(function(){
 							$('#calendar').fullCalendar('removeEvents', oldID);
 						}
 						var tomorrow = new Date(today);
-						tomorrow.setDate(today.getDate() - (getCorrespondingDay(val["day"])));
+						tomorrow.setDate((getCorrespondingDay(val["day"])) + today.getDate());
 	
 						newEvent.id = secID;
 						newEvent.title = cname + val["day"];
