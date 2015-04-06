@@ -1,3 +1,5 @@
+use NextSemester;
+
 CREATE VIEW schedule_secs AS
 SELECT *
 FROM section_days JOIN sche_sec_rel JOIN section
@@ -10,7 +12,7 @@ FROM schedule_secs a JOIN schedule_secs b
 WHERE a.startTime <= b.endTime
 AND a.endTime >= b.startTime
 AND a.sectionId != b.sectionId
-AND a.schedule_id = b.schedule_id
+AND a.schedule_id = b.schedule_id;	
 
 -- Get all the course section joined with days
 CREATE VIEW course_sec_info AS
