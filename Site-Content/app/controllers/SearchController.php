@@ -3,6 +3,7 @@
 use NextSemester\Courses\CurrentCourses;
 use NextSemester\Courses\CourseSections;
 use NextSemester\Courses\SectionDays;
+use NextSemester\Courses\SectionTimes;
 
 class SearchController extends \BaseController {
 
@@ -22,7 +23,7 @@ class SearchController extends \BaseController {
 
     public function course_section($sid){
 
-        $timesList = SectionDays::where('sectionId', '=', "$sid")->get()->all();
+        $timesList = SectionTimes::where('sectionId', '=', "$sid")->get()->all();
 
         return Response::json($timesList);
     }

@@ -36,3 +36,8 @@ from course JOIN section JOIN instructor
 WHERE section.courseId = course.id
 and instructor.id = section.instructorId;
 
+CREATE VIEW section_times AS
+SELECT SD.sectionId, SD.day, SD.startTime, SD.endTime, SD.roomInfo, I.fname, I.lname, I.rating
+FROM section S JOIN section_days SD JOIN instructor I
+WHERE S.id = SD.sectionId
+AND S.instructorId = I.id;

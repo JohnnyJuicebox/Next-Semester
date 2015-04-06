@@ -21,7 +21,7 @@
 				@include('layouts.partials.nav') <!-- Top Nav Bar and Side Menu -->
 				<section class="main-section"> <!-- Main Content -->
 					<div class="row">
-						<div class="small-12 columns">
+						<div class="large-12 columns">
 							@include('flash::message')
 							@yield('content')
 						</div>

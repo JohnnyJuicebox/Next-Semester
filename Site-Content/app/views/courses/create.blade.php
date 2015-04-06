@@ -91,64 +91,97 @@ function getCorrespondingDay(day){
 			return 6;
 	}
 }
+
+
 $(document).ready(function(){
+	
 	$('#calendar').fullCalendar({
 		header: {
 			left: '',
 			center: '',
 			right: ''
 		},
+		hiddenDays: [0],
 		editable: false,
 		eventLimit: true, // allow "more" link when too many events
 		defaultView: 'agendaWeek',
+		minTime: "08:00:00",
+		maxTime: "22:00:00",
+		allDaySlot: false,
 		events: [
-		]
+		], 
+		eventRender: function(event, element) { 
+            element.find('.fc-title').append("<br/>" + event.description);
+        }
 	});
 
-	$("button").click(function(){
+	$(".button").click(function(){
 		var cname = $("input[name=courseName]").val();
 		var url = "searchCourse/" + cname;
+		$(".sections").append('<div id="' + cname + '"></div>');
+
 		$.getJSON(url, function(json){
-			$(".sections").empty();
-			var today = new Date();
 			
-			$.each(json, function(i, val){
-				var sname = '<input type="radio" name="secName" value="'+ val["id"] +'"/>  ' + val["sec_no"] + "<br/>"; 
-				$(".sections").append(sname);
-			});
+			//$(".sections").empty();
+			if(json.length != 0){
 
-			var secUrl = 'searchCourse/section/';
-			var secID = -1;
-
-			$("input[name=secName]").on("click", function(){
-				
-				var oldID = secID;
-				secID = $('input:radio[name=secName]:checked').val();	
-
-				$.getJSON(secUrl + secID, function(data){
-					$.each(data, function(i, val){
-						var newEvent = new Object();
-						if(oldID != -1){
-							$('#calendar').fullCalendar('removeEvents', oldID);
-						}
-						var tomorrow = new Date(today);
-						tomorrow.setDate((getCorrespondingDay(val["day"])) + today.getDate());
-	
-						newEvent.id = secID;
-						newEvent.title = cname + val["day"];
-						newEvent.start = tomorrow.toISOString().substr(0,10) + " " + val["startTime"];
-						newEvent.end = tomorrow.toISOString().substr(0,10) + " " + val["endTime"];
-						newEvent.allDay = false;
-						$('#calendar').fullCalendar('renderEvent', newEvent);
-					});
-
+				var today = new Date();
+				$("#" + cname).append('<div class="cname">' + cname + '</div>');
+				$("#" + cname).append('<a class="' + cname + 'close">close</a><br/>');
+				$.each(json, function(i, val){
+					var sname = '<input type="radio" name="' + cname + 'secName" value="'+ val["id"] +'"/>  ' + val["sec_no"] + "<br/>"; 
+					$("#" + cname).append(sname);
 				});
-			});
+
+				var secUrl = 'searchCourse/section/';
+				var secID = -1;
+				$('.' + cname + 'close').on("click", function(){
+					$("#" + cname).remove();
+					var url = "searchCourse/" + cname;
+					$.getJSON(url, function(jsonInside){
+						$.each(jsonInside, function(i, val){
+							$('#calendar').fullCalendar('removeEvents', val["id"]);
+						});
+					});
+				});
+				$("input[name=" + cname + "secName]").on("click", function(){
+					
+					var oldID = secID;
+					
+					secID = $('input:radio[name=' + cname + 'secName]:checked').val();
+					if(oldID != -1){
+						$('#calendar').fullCalendar('removeEvents', oldID);
+					}
+				
+					$.getJSON(secUrl + secID, function(data){
+						$.each(data, function(i, val){
+							var newEvent = new Object();
+							var tomorrow = new Date(today);
+							tomorrow.setDate((today.getDate())+ (getCorrespondingDay(val["day"])-today.getDay()));
+							//alert(today.getDay());
+							newEvent.id = secID;
+							var rating = Math.round(val["rating"]*100)/100;
+							newEvent.title = cname + val["day"];
+							if(rating != -1){
+								newEvent.title = newEvent.title + " " + rating;
+							}
+							newEvent.start = tomorrow.toISOString().substr(0,10) + " " + val["startTime"];
+							newEvent.end = tomorrow.toISOString().substr(0,10) + " " + val["endTime"];
+							newEvent.description = val["fname"] + " " + val["lname"] + "<br/>" + val["roomInfo"];
+							newEvent.allDay = false;
+							$('#calendar').fullCalendar('renderEvent', newEvent);
+							//alert(tomorrow.toISOString());
+							//alert(tomorrow);
+						});
+
+					});
+				});
+
+			} 
 		}).fail(function(jqXHR, status, error){
 			$(".sections").empty();
 			$(".sections").append("<p>No such course found</p>");
 		});
-
 	});
 
 });
@@ -157,16 +190,16 @@ $(document).ready(function(){
 
 @section('content')
 <div id="row">
-<div class="small-3 columns">
-<input type="text" name="courseName" />
-<button class="search">Search</button><br/>
-<div class="sections">
-</div>
-</div>
-<div class="small-9 columns">
+	<div class="large-3 columns">
+		<input type="text" name="courseName" />
+		<a class="button postfix">Search</a><br/>
+		<div class="sections">
+		</div>
+	</div>
+	<div class="large-9 columns">
 		<div id="calendar">
 		</div>
-</div>
+	</div>
 </div>
 @stop
 
