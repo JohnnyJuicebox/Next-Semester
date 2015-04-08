@@ -324,14 +324,14 @@ class SectionController extends \BaseController {
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
-                                                "description" => $courseResults[$j]->fname . " " . $courseResults[$j]->lname . "<br/>" . $courseResults[$j]->roomInfo);
+                                                "description" => $this->checkIfExists($courseResults[$j]->fname) . " " . $this->checkIfExists($courseResults[$j]->lname) . "<br/>" . $this->checkIfExists($courseResults[$j]->roomInfo));
                     } else {
                         $resultArray[$ind++] = array("title" => $courseResults[$j]->cname,
                                                 "url" => "course/" . $courseResults[$j]->cname,
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
-                                                "description" => $courseResults[$j]->fname . " " . $courseResults[$j]->lname . "<br/>" . $courseResults[$j]->roomInfo);
+                                               "description" => $this->checkIfExists($courseResults[$j]->fname) . " " . $this->checkIfExists($courseResults[$j]->lname) . "<br/>" . $this->checkIfExists($courseResults[$j]->roomInfo));
                     }
                 }
             }
@@ -361,14 +361,14 @@ class SectionController extends \BaseController {
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
-                                                "description" => $courseResults[$j]->fname . " " . $courseResults[$j]->lname . "<br/>" . $courseResults[$j]->roomInfo);
+                                               "description" => $this->checkIfExists($courseResults[$j]->fname) . " " . $this->checkIfExists($courseResults[$j]->lname) . "<br/>" . $this->checkIfExists($courseResults[$j]->roomInfo));
                     } else {
                         $resultArray[$ind++] = array("title" => $courseResults[$j]->cname,
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "url" => "course/" . $courseResults[$j]->cname,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
-                                                "description" => $courseResults[$j]->fname . " " . $courseResults[$j]->lname . "<br/>" . $courseResults[$j]->roomInfo);
+                                                "description" => $this->checkIfExists($courseResults[$j]->fname) . " " . $this->checkIfExists($courseResults[$j]->lname) . "<br/>" . $this->checkIfExists($courseResults[$j]->roomInfo));
                     }
                 }
             }
@@ -378,6 +378,13 @@ class SectionController extends \BaseController {
         return Response::json(array());
     }
 
+    public function checkIfExists($val){
+        if($val == null){
+            return "";
+        }
+
+        return $val;
+    }
     public function manualgenerate(){
 
         return View::make('courses.manual');

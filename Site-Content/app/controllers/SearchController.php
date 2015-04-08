@@ -25,12 +25,12 @@ class SearchController extends \BaseController {
 
         $sectionList = array();
 
-        if(Request::ajax()){
+        //if(Request::ajax()){
             if(Session::has('user_id')){
                 $sectionList = CourseSections::where('cname', '=', "$cname")->get()->all();
                 return Response::json($sectionList);
             }
-        }
+        //}
 
         return Response::json($sectionList);
     }
@@ -39,12 +39,12 @@ class SearchController extends \BaseController {
 
         $timesList = array();
         
-        if(Request::ajax()){
+        //if(Request::ajax()){
             if(Session::has('user_id')){
                 $timesList = SectionTimes::where('sectionId', '=', "$sid")->get()->all();
                 return Response::json($timesList);
             }
-        }
+        //}
 
         return Response::json($timesList);
     }

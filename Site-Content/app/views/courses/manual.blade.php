@@ -37,6 +37,12 @@ function dateString(tomorrow){
 	return y + "-" + m + "-" + d;
 }
 
+function validate(val){
+	if(!val){
+		return "";
+	}
+	return val;
+}
 $(document).ready(function(){
 	
 
@@ -128,26 +134,29 @@ $(document).ready(function(){
 					var oldID = secID;
 					
 					secID = $('input:radio[name=' + cname + 'secName]:checked').val();
-					
+					alert(secID);
 					$.getJSON(secUrl + secID, function(data){
 						$.each(data, function(i, val){
 							
 							var newEvent = new Object();
 							var tomorrow = new Date(today);
-							
+							alert("here");
 							tomorrow.setDate((today.getDate())+ (getCorrespondingDay(val["day"])-today.getDay()));
 							
 							newEvent.id = secID;
-							var rating = Math.round(val["rating"]*100)/100;
+							var rating;
+							if(val["rating"] ){
+								rating = Math.round(val["rating"]*100)/100;
+								if(rating != -1){
+									newEvent.title = newEvent.title + " " + rating;
+								}
+							}
 							newEvent.title = cname + val["day"];
 							newEvent.url = 'course/' + cname;
-							if(rating != -1){
-								newEvent.title = newEvent.title + " " + rating;
-							}
+							
 							newEvent.start = dateString(tomorrow) + " " + val["startTime"];
 							newEvent.end = dateString(tomorrow) + " " + val["endTime"];
-							
-							newEvent.description = val["fname"] + " " + val["lname"] + "<br/>" + val["roomInfo"];
+							newEvent.description = validate(val["fname"]) + " " + validate(val["lname"]) + "<br/>" + validate(val["roomInfo"]);
 							newEvent.allDay = false;
 
 							$('#calendar').fullCalendar('renderEvent', newEvent);

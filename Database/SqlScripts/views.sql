@@ -34,13 +34,17 @@ FROM course JOIN section
 WHERE course.id = section.courseId;
 
 CREATE VIEW course_sections AS
-select course.cname, section.id, section.sec_no, instructor.fname, instructor.lname, instructor.rating, instructor.link
-from course JOIN section JOIN instructor
-WHERE section.courseId = course.id
-and instructor.id = section.instructorId;
+select csec.cname, csec.id, csec.sec_no, instructor.fname, instructor.lname, instructor.rating, instructor.link
+from csec LEFT JOIN instructor
+ON instructor.id = csec.instructorId;
 
 CREATE VIEW section_times AS
 SELECT SD.sectionId, S.courseId, SD.day, SD.startTime, SD.endTime, SD.roomInfo, I.fname, I.lname, I.rating
 FROM section S JOIN section_days SD JOIN instructor I
 WHERE S.id = SD.sectionId
 AND S.instructorId = I.id;
+
+CREATE VIEW csec AS
+select course.cname, section.id, section.sec_no, section.instructorId
+from course JOIN section
+WHERE course.id = section.courseId;
