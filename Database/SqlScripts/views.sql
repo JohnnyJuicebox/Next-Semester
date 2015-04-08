@@ -7,7 +7,7 @@ WHERE section_days.sectionId = sche_sec_rel.section_id
 AND section_days.sectionId = section.id;
 
 CREATE VIEW conflict AS
-SELECT DISTINCT(a.sectionId)
+SELECT DISTINCT(a.sectionId), a.schedule_id
 FROM schedule_secs a JOIN schedule_secs b
 WHERE a.startTime <= b.endTime
 AND a.endTime >= b.startTime
