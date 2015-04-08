@@ -215,6 +215,7 @@ $(document).ready(function(){
 							newEvent.id = secID;
 							var rating = Math.round(val["rating"]*100)/100;
 							newEvent.title = cname + val["day"];
+							newEvent.url = 'course/' + cname;
 							if(rating != -1){
 								newEvent.title = newEvent.title + " " + rating;
 							}

@@ -320,14 +320,14 @@ class SectionController extends \BaseController {
 
                     if(intval($courseResults[$j]->rating) > 0){
                         $resultArray[$ind++] = array("title" => $courseResults[$j]->cname . " " . round($courseResults[$j]->rating, 2),
-                                                "url" => "http://localhost/course/" . $courseResults[$j]->cname,   
+                                                "url" => "course/" . $courseResults[$j]->cname,   
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
                                                 "description" => $courseResults[$j]->fname . " " . $courseResults[$j]->lname . "<br/>" . $courseResults[$j]->roomInfo);
                     } else {
                         $resultArray[$ind++] = array("title" => $courseResults[$j]->cname,
-                                                "url" => "http://localhost/course/" . $courseResults[$j]->cname,
+                                                "url" => "course/" . $courseResults[$j]->cname,
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
@@ -357,7 +357,7 @@ class SectionController extends \BaseController {
 
                     if(intval($courseResults[$j]->rating) > 0){
                         $resultArray[$ind++] = array("title" => $courseResults[$j]->cname . " " . round($courseResults[$j]->rating, 2),
-                                                "url" => "http://localhost/course/" . $courseResults[$j]->cname,   
+                                                "url" => "course/" . $courseResults[$j]->cname,   
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
@@ -365,7 +365,7 @@ class SectionController extends \BaseController {
                     } else {
                         $resultArray[$ind++] = array("title" => $courseResults[$j]->cname,
                                                 "id" => $courseResults[$j]->sectionId,
-                                                "url" => "http://localhost/course/" . $courseResults[$j]->cname,
+                                                "url" => "course/" . $courseResults[$j]->cname,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
                                                 "description" => $courseResults[$j]->fname . " " . $courseResults[$j]->lname . "<br/>" . $courseResults[$j]->roomInfo);
