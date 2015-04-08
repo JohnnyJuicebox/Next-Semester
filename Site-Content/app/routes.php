@@ -60,9 +60,14 @@ Route::get('statuses', 'StatusController@index');
 /**
  * Schedule
  */
-Route::get('schedules', [
+Route::get('autoschedule', [
 	'as' => 'schedule_path',
-	'uses' => 'ScheduleController@index'
+	'uses' => 'ScheduleController@auto'
+]);
+
+Route::get('manualschedule', [
+	'as' => 'schedule_manual_path',
+	'uses' => 'ScheduleController@manual'
 ]);
 
 Route::get('/courses', [
@@ -89,3 +94,28 @@ Route::get('/addSection', [
 	'as' => 'add_section_path',
 	'uses' => 'SectionController@index'
 ]);
+
+Route::get('/autogenerate', [
+	'as' => 'auto_generator_path',
+	'uses' => 'SectionController@logautogenerate'
+]);
+
+Route::get('/generate', [
+	'as' => 'generator_path',
+	'uses' => 'SectionController@schedule'
+]);
+
+Route::get('usermanualschedule', 'SectionController@getUserManualSchedule');
+Route::get('userautoschedule', 'SectionController@getUserAutoSchedule');
+
+Route::get('manualstore', 'ScheduleController@manualstore');
+
+Route::get('course/{cid}', [
+	'as' => 'course_path',
+	'uses' => 'CourseController@index'
+]);
+
+Route::get('course/', [
+	'as' => 'course_all_path',
+	'uses' => 'CourseController@courselist'
+	]);

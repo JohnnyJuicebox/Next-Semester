@@ -7,10 +7,11 @@ WHERE section_days.sectionId = sche_sec_rel.section_id
 AND section_days.sectionId = section.id;
 
 CREATE VIEW conflict AS
-SELECT a.section_id, a.courseId, a.sec_no, a.callnumber, a.startTime, a.endTime, a.instructorId, a.schedule_id
+SELECT DISTINCT(a.sectionId)
 FROM schedule_secs a JOIN schedule_secs b
 WHERE a.startTime <= b.endTime
 AND a.endTime >= b.startTime
+AND a.day = b.day
 AND a.sectionId != b.sectionId
 AND a.schedule_id = b.schedule_id;	
 
@@ -39,7 +40,7 @@ WHERE section.courseId = course.id
 and instructor.id = section.instructorId;
 
 CREATE VIEW section_times AS
-SELECT SD.sectionId, SD.day, SD.startTime, SD.endTime, SD.roomInfo, I.fname, I.lname, I.rating
+SELECT SD.sectionId, S.courseId, SD.day, SD.startTime, SD.endTime, SD.roomInfo, I.fname, I.lname, I.rating
 FROM section S JOIN section_days SD JOIN instructor I
 WHERE S.id = SD.sectionId
 AND S.instructorId = I.id;

@@ -54,6 +54,9 @@ class RegistrationController extends BaseController {
 
 		Auth::login($user);
 
+		$user = User::where('username', '=', "$username")->firstOrFail();
+		Session::put('user_id', $user->id);
+
 		Flash::success('Glad to have you as a new NextSemester member!');
 
 		return Redirect::home()->with('flash_messge', "Welcome aboard!");

@@ -9,21 +9,42 @@ class SearchController extends \BaseController {
 
     public function index(){
 
-        $courseList = CurrentCourses::all();
+        $courseList = array();
 
-        return Response::json($courseList);
+        if(Request::ajax()){
+            if(Session::has('user_id')){
+                $courseList = CurrentCourses::all();
+                return Response::json($courseList);
+            }
+        }
+       
+       return $courseList;
     }
 
     public function course($cname){
 
-        $sectionList = CourseSections::where('cname', '=', "$cname")->get()->all();
+        $sectionList = array();
+
+        if(Request::ajax()){
+            if(Session::has('user_id')){
+                $sectionList = CourseSections::where('cname', '=', "$cname")->get()->all();
+                return Response::json($sectionList);
+            }
+        }
 
         return Response::json($sectionList);
     }
 
     public function course_section($sid){
 
-        $timesList = SectionTimes::where('sectionId', '=', "$sid")->get()->all();
+        $timesList = array();
+        
+        if(Request::ajax()){
+            if(Session::has('user_id')){
+                $timesList = SectionTimes::where('sectionId', '=', "$sid")->get()->all();
+                return Response::json($timesList);
+            }
+        }
 
         return Response::json($timesList);
     }

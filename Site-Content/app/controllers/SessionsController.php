@@ -1,7 +1,8 @@
 <?php
 
 use NextSemester\Forms\SignInForm;
- 
+use NextSemester\Users\User;
+
 class SessionsController extends \BaseController {
 
 	private $signInForm;
@@ -36,11 +37,14 @@ class SessionsController extends \BaseController {
 		// if invalid, then go back
 		$formData = Input::only('email', 'password');
 		$this->signInForm->validate($formData);
+		$email = Input::get('email');
 
 		// if is valid, then try to sign in
 		if(Auth::attempt($formData))
 		{
 			Flash::message('Welcome back!');
+			$user = User::where('email', '=', "$email")->firstOrFail();
+			Session::put('user_id', $user->id);
 			// redirect to statuses
 			return Redirect::intended('statuses');
 		} else {
@@ -57,7 +61,7 @@ class SessionsController extends \BaseController {
 	public function destroy()
 	{
 		Auth::logout();
-
+		Session::flush();
 		Flash::success('You have now been logged out.');
 		return Redirect::home();
 	}

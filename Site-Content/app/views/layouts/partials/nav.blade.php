@@ -18,9 +18,10 @@
 <aside class="right-off-canvas-menu"> <!-- Right-Side Menu -->
 	<ul class="off-canvas-list"> 
 		<li><label>Sections</label></li> 
-		<li>{{ link_to_route('schedule_path', 'Schedule Builder', null, ['class' => '']) }}</li> 
+		<li>{{ link_to_route('schedule_path', 'Auto Schedule', null, ['class' => '']) }}</li> 
+		<li>{{ link_to_route('schedule_manual_path', 'Manual Schedule', null, ['class' => '']) }}</li> 
 		<li><a href="#">Friends</a></li> 
-		<li><a href="#">Classes</a></li> 
+		<li>{{ link_to_route('course_all_path', 'Classes', null, ['class' => '']) }}</li> 
 		<li><a href="#">Profile</a></li>
 		<li><a href="#">Settings</a></li>
 		<li>{{ link_to_route('logout_path', 'Log Out', null, ['class' => '']) }}</li>
