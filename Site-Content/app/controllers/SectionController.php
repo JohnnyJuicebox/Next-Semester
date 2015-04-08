@@ -89,17 +89,17 @@ class SectionController extends \BaseController {
                 $array = $this->generateTimingSchedule();
             }
 
-        }
+      }
 
-        return Response::json(array());
+       return Response::json(array());
     }
 
     public function generateTimingSchedule(){
 
         $courses = Input::get('cnames');
         $indexes = array();
-        $scheduleId = Schedule::where('user_id', '=', '1')->get()->all()[0]->id;
-        
+        $scheduleId = Schedule::where('user_id', '=', Session::get('user_id'))->get()->all()[0]->id;
+        return $scheduleId;
         DB::delete('DELETE FROM sche_sec_rel WHERE schedule_id = ?', array($scheduleId));
         foreach($courses as $val){
             $indexes[$val] = 0;
@@ -205,7 +205,7 @@ class SectionController extends \BaseController {
 
             $courses = Input::get('cnames');
             $indexes = array();
-            $scheduleId = Schedule::where('user_id', '=', '1')->get()->all()[0]->id;
+            $scheduleId = Schedule::where('user_id', '=', Session::get('user_id'))->get()->all()[0]->id;
             
             DB::delete('DELETE FROM sche_sec_rel WHERE schedule_id = ?', array($scheduleId));
             foreach($courses as $val){
