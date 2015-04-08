@@ -204,8 +204,8 @@ def parse_course_schedule_subpage(url):
 
 def main():
 
-    url = 'http://www.njit.edu/registrar/schedules/courses/spring/index_list.html';
-    homeUrl = 'http://www.njit.edu/registrar/schedules/courses/spring/';
+    url = 'http://www.njit.edu/registrar/schedules/courses/fall/index_list.html';
+    homeUrl = 'http://www.njit.edu/registrar/schedules/courses/fall/';
     subjLst = get_subject_list(url);
     #if(len(sys.argv) == 1):
     #    print 'Error: Need one command line argument';
