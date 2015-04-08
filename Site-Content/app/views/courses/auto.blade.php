@@ -118,8 +118,4 @@ $(document).ready(function(){
 @stop
 
 @section('tailScripts')
-<script>
-$(document).ready(function(){
-});
-</script>
 @stop

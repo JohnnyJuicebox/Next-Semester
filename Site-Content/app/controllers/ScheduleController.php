@@ -12,39 +12,7 @@ class ScheduleController extends \BaseController {
 	 */
 	public function auto()
 	{
-		$events = [];
-
-		$events[] = Calendar::event(
-		    'Event One', //event title
-		    false, //full day event?
-		    '2015-03-11T0800', //start time (you can also use Carbon instead of DateTime)
-		    '2015-03-12T0800' //end time (you can also use Carbon instead of DateTime)
-		);
-
-        $currentDay = getdate()['wday'];
-        $sectionDay = 2;
-        $ct = date("Y-m-d", time() + ($sectionDay-$currentDay) * 86400);
-
-
-        $events[] = Calendar::event(
-		    "CS 280", //event title
-		    false, //full day event?
-		    new DateTime("$ct 12:00:00"), //start time (you can also use Carbon instead of DateTime)
-		    new DateTime("$ct 15:00:00") //end time (you can also use Carbon instead of DateTime)
-		);
-
-		//EventModel implements MaddHatter\LaravelFullcalendar\Event
-
-		$calendar = Calendar::addEvents($events) //add an array with addEvents
-		    ->setOptions([ //set fullcalendar options
-		        'firstDay' => 1,
-		        'defaultView' => 'agendaWeek'
-            ]);
-
-
-        //return View::make('courses.create');
 		return View::make('courses.auto');
-		//return View::make('schedules.create', compact('calendar'));
 	}
 
 	public function manual(){

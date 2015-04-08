@@ -2,78 +2,6 @@
 
 @section('headScripts')
 <script>
-/* $(document).ready(function(){ */
-/*     $.ajax({ */
-/*         url: 'http://localhost/courses', */
-/*         type: 'GET', */
-/*         success: function(data){ */
-/*             $.each(data, function(key, value){ */
-/*                 var item = "<h3 id=" + value.cname  + ">" + value.cname + "</h3>"; */
-/*                 item = item + "<div><p>" +value.cdesc + "</p></div>"; */
-/*                 $('#accord').append(item); */
-/*             }); */
-/*         } */
-/*     }); */
-
-/* }); */
-
-/* $(document).ready(function(){ */
-
-/*     function log(ind, message){ */
-/*         $("#getCourses").append('<input class="secs" type="radio" name="sections" value=' + ind +'>' + message["sec_no"] + '<br/>'); */
-/*         $("#getCourses").scrollTop(0); */
-/*     } */
-
-/*     function logTest(item){ */
-/*         $("#getCourses").empty(); */
-/*         var ind = 1; */
-/*         $.each(item.secInfo, function(i, val){ */
-/*             log(ind, val); */
-/*             ind = ind + 1; */
-/*         }); */
-/*     } */
-
-/*     $("#tags" ).autocomplete({ */
-/*         source: function(request, response){ */
-/*             $.ajax({ */
-/*                 url: 'courses/', */
-/*                 type: 'GET', */
-/*                 success: function(data){ */
-/*                     response($.map(data, function(item){ */
-/*                         return { */
-/*                             label: item.cdesc, */
-/*                             value: item.cname, */
-/*                             secInfo: item.sec_info */
-/*                         } */
-/*                     })); */
-/*                 } */
-/*             }); */
-/*         }, */
-/*         minLength: 0, */
-/*         focus: function(event, ui){ */
-/*             $("#tags").val(ui.item.value); */
-/*             return false; */
-/*         }, */
-/*         select: function(event, ui){ */
-/*             $("#tags").val(ui.item.label); */
-/*             logTest(ui.item); */
-/*             $("input[name='sections']").on("click", function(){ */
-/*                     $("#times").empty(); */
-/*                     var boxChecked = $('input:radio[name=sections]:checked').val(); */
-/*                     $.each(ui.item.secInfo[boxChecked-1]["timesInfo"], function(i, val){ */
-/*                         $("#times").append(val["day"] + " " + val["startTime"] + " " + val["endTime"] + " " + val["roomInfo"] + "<br/>"); */
-/*                     }); */
-/*             }); */
-/*             return false; */
-/*         } */
-/*     }) */
-/*     .autocomplete("instance")._renderItem = function(ul, item){ */
-/*         return $("<li>") */
-/*                 .append("<a>" + item.value + "</a>") */
-/*                 .appendTo(ul); */
-/*     }; */
-/* }); */
-
 function getCorrespondingDay(day){
 
 	switch(day){
@@ -119,7 +47,7 @@ $(document).ready(function(){
 	    }).get();
 
 		$.ajax({
-	        url: 'generate',
+	        url: 'manualstore',
 	        type: 'get',
 	        data: { secNames: checkValues },
 	        success:function(data){
@@ -200,10 +128,7 @@ $(document).ready(function(){
 					var oldID = secID;
 					
 					secID = $('input:radio[name=' + cname + 'secName]:checked').val();
-					//if(oldID != -1){
-					//	$('#calendar').fullCalendar('removeEvents', oldID);
-					//}
-				
+					
 					$.getJSON(secUrl + secID, function(data){
 						$.each(data, function(i, val){
 							
@@ -238,37 +163,6 @@ $(document).ready(function(){
 		$(".sections").empty();
 		$(".sections").append("<p>No such course found</p>");
 	});
-	//function(){
-			
-			// var checkValues = $('input:radio[name$=secName]:checked').map(function(){
-	  //           return $(this).val();
-	  //       }).get();
-			// //});
-		
-	  //       // $.ajax({
-	  //       //     url: 'generate',
-	  //       //     type: 'get',
-	  //       //     data: { cnames: checkValues },
-	  //       //     success:function(data){
-	  //       //     	alert('success');
-	  //       //     	$('#calendar').fullCalendar({events: 'generate'});
-					
-	  //       //     }
-	  //       // });
-	  // //       var uniqueNames = [];
-	  // //       var notFound = -1;
-	  // //       alert('here');
-			// // $.each(checkValues, function(i, val){
-			// // 	if($.inArray(val, uniqueNames) == notFound){
-			// // 		uniqueNames.push(val);
-			// // 	}
-	  // //       	//alert(val);
-	  // //       });
-
-	  //       $.each(checkValues, function(i, val){
-	  //       	alert(val);
-	  //       });
-	//	});
 });
 
 </script>
@@ -281,7 +175,7 @@ $(document).ready(function(){
 		<a id="search" class="button postfix">Search</a><br/>
 		<div class="sections">
 		</div>
-		<a id="save" class="button postfix">Save Changes</a>
+		<a id="save" class="button postfix">Save</a>
 	</div>
 	<div class="large-9 columns">
 		<div id="calendar">
@@ -291,8 +185,4 @@ $(document).ready(function(){
 @stop
 
 @section('tailScripts')
-<script>
-$(document).ready(function(){
-});
-</script>
 @stop
