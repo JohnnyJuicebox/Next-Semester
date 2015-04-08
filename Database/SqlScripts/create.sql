@@ -106,3 +106,19 @@ CREATE TABLE IF NOT EXISTS sche_sec_rel (
 		ON DELETE CASCADE,
 	PRIMARY KEY (schedule_id, section_id)
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS feed (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    content BLOB NOT NULL,
+    user_id int(11) NOT NULL,
+    course_id int(11) NOT NULL,
+    CONSTRAINT pk_feed_id PRIMARY KEY(id),
+    CONSTRAINT fk_feed_user_id 
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_feed_course_id
+        FOREIGN KEY (course_id)
+        REFERENCES course(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
