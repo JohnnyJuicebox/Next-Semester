@@ -134,13 +134,13 @@ $(document).ready(function(){
 					var oldID = secID;
 					
 					secID = $('input:radio[name=' + cname + 'secName]:checked').val();
-					alert(secID);
+					//alert(secID);
 					$.getJSON(secUrl + secID, function(data){
 						$.each(data, function(i, val){
 							
 							var newEvent = new Object();
 							var tomorrow = new Date(today);
-							alert("here");
+							//alert("here");
 							tomorrow.setDate((today.getDate())+ (getCorrespondingDay(val["day"])-today.getDay()));
 							
 							newEvent.id = secID;

@@ -132,13 +132,11 @@ class SectionController extends \BaseController {
                 
                 $conflictedRows = DB::select($conflictsql);
                 $conflictCount = count($conflictedRows);
-                $confIndex = 0;
+                
                 if($conflictCount != 0){
                     while($conflictCount != 0){
                         //$str = //$str . "Conflict arisen<br/>";
-                        if($confIndex == 1000000){
-                            break;
-                        }
+                        
                         $tmpCname = $this->getCourseName($conflictedRows[1]->sectionId);
                         $tmpSecId = $conflictedRows[1]->sectionId;
 
@@ -242,13 +240,10 @@ class SectionController extends \BaseController {
                     
                     $conflictedRows = DB::select($conflictsql);
                     $conflictCount = count($conflictedRows);
-                    $confIndex = 0;
+                    
                     if($conflictCount != 0){
                         while($conflictCount != 0){
-                            $confIndex = $confIndex + 1;
-                            if($confIndex == 1000000){
-                                break;
-                            }
+                            
                             //$str = //$str . "Conflict arisen<br/>";
                             $tmpCname = $this->getCourseName($conflictedRows[1]->sectionId);
                             $tmpSecId = $conflictedRows[1]->sectionId;
@@ -414,7 +409,7 @@ class SectionController extends \BaseController {
         $insertsql = 'INSERT INTO sche_sec_rel(schedule_id, section_id) VALUES (?, ?)';
         $deletesql = 'DELETE FROM sche_sec_rel WHERE schedule_id = ? AND section_id = ?';
 
-        $conflictsql = 'SELECT  * FROM conflict';  
+        $conflictsql = 'SELECT  * FROM conflict WHERE schedule_id = ' . $scheduleId; 
         //$str = "";
 
         for($index = 0; $index < count($courses); $index++){

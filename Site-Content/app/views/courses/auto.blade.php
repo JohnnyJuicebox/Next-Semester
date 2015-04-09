@@ -86,7 +86,7 @@ $(document).ready(function(){
             data: { cnames: checkValues, sOption: schedOption },
             success:function(data){
             	$('#calendar').fullCalendar('refetchEvents');
-				
+            	events = $('#calendar').fullCalendar('clientEvents');
             }
         });
 	});
@@ -112,6 +112,8 @@ $(document).ready(function(){
 	</div>
 	<div class="large-9 columns">
 		<div id="calendar">
+		</div>
+		<div id="online">
 		</div>
 	</div>
 </div>

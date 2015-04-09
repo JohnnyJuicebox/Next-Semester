@@ -95,10 +95,10 @@ Route::get('/addSection', [
 	'uses' => 'SectionController@index'
 ]);
 
-Route::get('/autogenerate', [
-	'as' => 'auto_generator_path',
-	'uses' => 'SectionController@logautogenerate'
-]);
+// Route::get('/autogenerate', [
+// 	'as' => 'auto_generator_path',
+// 	'uses' => 'SectionController@logautogenerate'
+// ]);
 
 Route::get('/generate', [
 	'as' => 'generator_path',
