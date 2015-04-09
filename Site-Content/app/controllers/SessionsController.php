@@ -46,7 +46,7 @@ class SessionsController extends \BaseController {
 			$user = User::where('email', '=', "$email")->firstOrFail();
 			Session::put('user_id', $user->id);
 			// redirect to statuses
-			return Redirect::intended('statuses');
+			return Redirect::intended('autoschedule');
 		} else {
 			Flash::alert('Your username/password combination was incorrect');
 			return Redirect::to('login');

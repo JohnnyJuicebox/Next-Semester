@@ -78,3 +78,8 @@ a.nav-link:hover {
 
 .nav-logo {
   font-size: 1.125rem; }
+
+.fc-toolbar {
+  text-align: center;
+  margin-bottom: 0em;
+}

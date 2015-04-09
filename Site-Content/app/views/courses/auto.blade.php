@@ -90,6 +90,7 @@ $(document).ready(function(){
             }
         });
 	});
+	$('.fc-toolbar').remove();
 
 });
 </script>
@@ -97,18 +98,21 @@ $(document).ready(function(){
 
 @section('content')
 <div id="row">
+	<h3 align="center" style="padding-bottom: 5px;">AutoSchedule Calendar</h3>
 	<div class="large-3 columns">
-		<input type="text" name="courseName" />
-		<a id="add" class="button postfix">Add</a><br/>
-		<div class="sections">
+		<div style="border: 2px solid black; padding: 10px;">
+			<h5>Course Selection:</h5>
+			<input type="text" name="courseName" />
+			<a id="add" class="button postfix">Add</a><br/>
+			<div class="sections panel radius">
+				<h5>Courses:</h5>
+			</div>
+			<div id="options" class="panel radius">
+				<input type="radio" name="scheduleOption" value="1" />Best Professor<br/>
+				<input type="radio" name="scheduleOption" value="2" />Best Timing<br/>
+			</div>
+			<a id="generate" class="button postfix">Submit</a>
 		</div>
-		<div id="options">
-			<br/>
-			<br/>
-			<input type="radio" name="scheduleOption" value="1" />Best Professor<br/>
-			<input type="radio" name="scheduleOption" value="2" />Best Timing<br/>
-		</div>
-		<a id="generate" class="button postfix">Submit</a>
 	</div>
 	<div class="large-9 columns">
 		<div id="calendar">

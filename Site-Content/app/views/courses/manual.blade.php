@@ -89,6 +89,7 @@ $(document).ready(function(){
         }
 	});
 
+	$('.fc-toolbar').remove();
 	var secList = [];
 
 	$("#search").click(function(){
@@ -179,12 +180,17 @@ $(document).ready(function(){
 
 @section('content')
 <div id="row">
+	<h3 align="center" style="padding-bottom: 5px;">Manual Calendar</h3>
 	<div class="large-3 columns">
-		<input type="text" name="courseName" />
-		<a id="search" class="button postfix">Search</a><br/>
-		<div class="sections">
+		<div style="border: 2px solid black; padding: 10px;">
+			<h5>Course Selection:</h5>
+			<input type="text" name="courseName" />
+			<a id="search" class="button postfix">Search</a><br/>
+			<div class="sections panel radius">
+			Courses:
+			</div>
+			<a id="save" class="button postfix">Save</a>
 		</div>
-		<a id="save" class="button postfix">Save</a>
 	</div>
 	<div class="large-9 columns">
 		<div id="calendar">
