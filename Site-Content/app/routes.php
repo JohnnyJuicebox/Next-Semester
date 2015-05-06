@@ -95,11 +95,6 @@ Route::get('/addSection', [
 	'uses' => 'SectionController@index'
 ]);
 
-// Route::get('/autogenerate', [
-// 	'as' => 'auto_generator_path',
-// 	'uses' => 'SectionController@logautogenerate'
-// ]);
-
 Route::get('/generate', [
 	'as' => 'generator_path',
 	'uses' => 'SectionController@schedule'
@@ -107,9 +102,7 @@ Route::get('/generate', [
 
 Route::get('usermanualschedule', 'SectionController@getUserManualSchedule');
 Route::get('userautoschedule', 'SectionController@getUserAutoSchedule');
-
 Route::get('manualstore', 'ScheduleController@manualstore');
-
 Route::get('course/{cid}', [
 	'as' => 'course_path',
 	'uses' => 'CourseController@index'
@@ -118,4 +111,27 @@ Route::get('course/{cid}', [
 Route::get('course/', [
 	'as' => 'course_all_path',
 	'uses' => 'CourseController@courselist'
-	]);
+]);
+
+Route::post('wall/', [
+    'as' => 'wall_path',
+    'uses' => 'WallController@index'
+]);
+
+Route::get('wall/', [
+    'as' => 'wall_all_path',
+    'uses' => 'WallController@allPosts'
+]);
+
+Route::get('comments/', [
+    'as' => 'coments_wall_path',
+    'uses' => 'WallController@getComments'
+]);
+
+App::after(function($request, $response)
+{
+    $response->headers->set('Cache-Control','nocache, no-store, max-age=0, must-revalidate');
+    $response->headers->set('Pragma','no-cache');
+    $response->headers->set('Expires','Fri, 01 Jan 1990 00:00:00 GMT');
+});
+

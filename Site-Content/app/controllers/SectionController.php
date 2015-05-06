@@ -65,11 +65,11 @@ class SectionController extends \BaseController {
     }
 
     public function getDateInfo($day){
-        
+
         $currentDay = getdate()['wday'];
         $secDay = $this->getCorrespondingDay($day);
         $currentTime = date("Y-m-d", time() + ($secDay-$currentDay) * 86400);
-        
+
         return $currentTime;
     }
 
@@ -78,7 +78,7 @@ class SectionController extends \BaseController {
         if(!Session::has('user_id')){
             return Response::json(array());
         }
-        
+
         $option = Input::get('sOption');
 
         if(Request::ajax()){
@@ -99,7 +99,7 @@ class SectionController extends \BaseController {
         $courses = Input::get('cnames');
         $indexes = array();
         $scheduleId = Schedule::where('user_id', '=', Session::get('user_id'))->get()->all()[0]->id;
-        
+
         DB::delete('DELETE FROM sche_sec_rel WHERE schedule_id = ?', array($scheduleId));
         foreach($courses as $val){
             $indexes[$val] = 0;
@@ -107,12 +107,12 @@ class SectionController extends \BaseController {
 
         $output = array();
         $ind = 0;
-       
+
         $selectsql = 'SELECT id FROM course_sections WHERE cname = ? ORDER BY sec_no desc LIMIT ?,1';
         $insertsql = 'INSERT INTO sche_sec_rel(schedule_id, section_id) VALUES (?, ?)';
         $deletesql = 'DELETE FROM sche_sec_rel WHERE schedule_id = ? AND section_id = ?';
 
-        $conflictsql = 'SELECT  * FROM conflict WHERE schedule_id = ' . $scheduleId;  
+        $conflictsql = 'SELECT  * FROM conflict WHERE schedule_id = ' . $scheduleId;
         $str = "";
 
         for($index = 0; $index < count($courses); $index++){
@@ -129,24 +129,24 @@ class SectionController extends \BaseController {
                 }
                 //$str = //$str . "Insert: " . $courses[$index] . " " . $results[0]->id . "<br/>";
                 $indexes[$courses[$index]] = $indexes[$courses[$index]] + 1;
-                
+
                 $conflictedRows = DB::select($conflictsql);
                 $conflictCount = count($conflictedRows);
-                
+
                 if($conflictCount != 0){
                     while($conflictCount != 0){
                         //$str = //$str . "Conflict arisen<br/>";
-                        
+
                         $tmpCname = $this->getCourseName($conflictedRows[1]->sectionId);
                         $tmpSecId = $conflictedRows[1]->sectionId;
 
                         $confResults = DB::select($selectsql, array($tmpCname, $indexes[$tmpCname]));
 
                         if(count($confResults) != 0){
-                            
+
                             DB::delete($deletesql, array($scheduleId, $tmpSecId));
                             //$str = //$str . "Delete: " . $tmpCname . " " . $tmpSecId . "<br/>";
-                            
+
                             try{
                                 DB::insert($insertsql, array($scheduleId, $confResults[0]->id));
                              } catch(Illuminate\Database\QueryException $e){
@@ -157,7 +157,7 @@ class SectionController extends \BaseController {
                                 }
                             }
                             //$str = //$str . "Insert: " . $tmpCname . " " . $confResults[0]->id . "<br/>";
-                            
+
                             $indexes[$tmpCname] = $indexes[$tmpCname] + 1;
                             $conflictedRows = DB::select($conflictsql);
                             $conflictCount = count($conflictedRows);
@@ -179,7 +179,7 @@ class SectionController extends \BaseController {
                                 }
                             }
                             //$str = //$str . "Insert: " . $tmpCname . " " . $confResults[0]->id . "<br/>";
-                            
+
                             $indexes[$tmpCname] = $indexes[$tmpCname] + 1;
                             $conflictedRows = DB::select($conflictsql);
                             $conflictCount = count($conflictedRows);
@@ -195,7 +195,6 @@ class SectionController extends \BaseController {
         return Response::json($resultArray);
     }
 
-
     public function generateSchedule(){
 
         if(!Session::has('user_id')){
@@ -207,7 +206,7 @@ class SectionController extends \BaseController {
             $courses = Input::get('cnames');
             $indexes = array();
             $scheduleId = Schedule::where('user_id', '=', Session::get('user_id'))->get()->all()[0]->id;
-            
+
             DB::delete('DELETE FROM sche_sec_rel WHERE schedule_id = ?', array($scheduleId));
             foreach($courses as $val){
                 $indexes[$val] = 0;
@@ -215,12 +214,12 @@ class SectionController extends \BaseController {
 
             $output = array();
             $ind = 0;
-           
+
             $selectsql = 'SELECT id FROM course_sections WHERE cname = ? ORDER BY rating desc LIMIT ?,1';
             $insertsql = 'INSERT INTO sche_sec_rel(schedule_id, section_id) VALUES (?, ?)';
             $deletesql = 'DELETE FROM sche_sec_rel WHERE schedule_id = ? AND section_id = ?';
 
-            $conflictsql = 'SELECT  * FROM conflict WHERE schedule_id = ' . $scheduleId;  
+            $conflictsql = 'SELECT  * FROM conflict WHERE schedule_id = ' . $scheduleId;
             $str = "";
 
             for($index = 0; $index < count($courses); $index++){
@@ -237,13 +236,13 @@ class SectionController extends \BaseController {
                     }
                     //$str = //$str . "Insert: " . $courses[$index] . " " . $results[0]->id . "<br/>";
                     $indexes[$courses[$index]] = $indexes[$courses[$index]] + 1;
-                    
+
                     $conflictedRows = DB::select($conflictsql);
                     $conflictCount = count($conflictedRows);
-                    
+
                     if($conflictCount != 0){
                         while($conflictCount != 0){
-                            
+
                             //$str = //$str . "Conflict arisen<br/>";
                             $tmpCname = $this->getCourseName($conflictedRows[1]->sectionId);
                             $tmpSecId = $conflictedRows[1]->sectionId;
@@ -251,10 +250,10 @@ class SectionController extends \BaseController {
                             $confResults = DB::select($selectsql, array($tmpCname, $indexes[$tmpCname]));
 
                             if(count($confResults) != 0){
-                                
+
                                 DB::delete($deletesql, array($scheduleId, $tmpSecId));
                                 //$str = //$str . "Delete: " . $tmpCname . " " . $tmpSecId . "<br/>";
-                                
+
                                 try{
                                     DB::insert($insertsql, array($scheduleId, $confResults[0]->id));
                                  } catch(Illuminate\Database\QueryException $e){
@@ -265,7 +264,7 @@ class SectionController extends \BaseController {
                                     }
                                 }
                                 //$str = //$str . "Insert: " . $tmpCname . " " . $confResults[0]->id . "<br/>";
-                                
+
                                 $indexes[$tmpCname] = $indexes[$tmpCname] + 1;
                                 $conflictedRows = DB::select($conflictsql);
                                 $conflictCount = count($conflictedRows);
@@ -287,7 +286,7 @@ class SectionController extends \BaseController {
                                     }
                                 }
                                 //$str = //$str . "Insert: " . $tmpCname . " " . $confResults[0]->id . "<br/>";
-                                
+
                                 $indexes[$tmpCname] = $indexes[$tmpCname] + 1;
                                 $conflictedRows = DB::select($conflictsql);
                                 $conflictCount = count($conflictedRows);
@@ -322,7 +321,7 @@ class SectionController extends \BaseController {
 
                     if(intval($courseResults[$j]->rating) > 0){
                         $resultArray[$ind++] = array("title" => $courseResults[$j]->cname . " " . round($courseResults[$j]->rating, 2),
-                                                "url" => "course/" . $courseResults[$j]->cname,   
+                                                "url" => "course/" . $courseResults[$j]->cname,
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
@@ -359,7 +358,7 @@ class SectionController extends \BaseController {
 
                     if(intval($courseResults[$j]->rating) > 0){
                         $resultArray[$ind++] = array("title" => $courseResults[$j]->cname . " " . round($courseResults[$j]->rating, 2),
-                                                "url" => "course/" . $courseResults[$j]->cname,   
+                                                "url" => "course/" . $courseResults[$j]->cname,
                                                 "id" => $courseResults[$j]->sectionId,
                                                 "start" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->startTime,
                                                 "end" => $this->getDateInfo($courseResults[$j]->day) . " " . $courseResults[$j]->endTime,
@@ -387,6 +386,7 @@ class SectionController extends \BaseController {
 
         return $val;
     }
+
     public function manualgenerate(){
 
         return View::make('courses.manual');
@@ -404,12 +404,12 @@ class SectionController extends \BaseController {
 
         $output = array();
         $ind = 0;
-       
+
         $selectsql = 'SELECT id FROM course_sections WHERE cname = ? ORDER BY rating desc LIMIT ?,1';
         $insertsql = 'INSERT INTO sche_sec_rel(schedule_id, section_id) VALUES (?, ?)';
         $deletesql = 'DELETE FROM sche_sec_rel WHERE schedule_id = ? AND section_id = ?';
 
-        $conflictsql = 'SELECT  * FROM conflict WHERE schedule_id = ' . $scheduleId; 
+        $conflictsql = 'SELECT  * FROM conflict WHERE schedule_id = ' . $scheduleId;
         //$str = "";
 
         for($index = 0; $index < count($courses); $index++){
@@ -426,7 +426,7 @@ class SectionController extends \BaseController {
                 }
                 //$str = //$str . "Insert: " . $courses[$index] . " " . $results[0]->id . "<br/>";
                 $indexes[$courses[$index]] = $indexes[$courses[$index]] + 1;
-                
+
                 $conflictedRows = DB::select($conflictsql);
                 $conflictCount = count($conflictedRows);
 
@@ -439,10 +439,10 @@ class SectionController extends \BaseController {
                         $confResults = DB::select($selectsql, array($tmpCname, $indexes[$tmpCname]));
 
                         if(count($confResults) != 0){
-                            
+
                             DB::delete($deletesql, array($scheduleId, $tmpSecId));
                             //$str = //$str . "Delete: " . $tmpCname . " " . $tmpSecId . "<br/>";
-                            
+
                             try{
                             DB::insert($insertsql, array($scheduleId, $confResults[0]->id));
                              } catch(Illuminate\Database\QueryException $e){
@@ -453,7 +453,7 @@ class SectionController extends \BaseController {
                                 }
                             }
                             //$str = //$str . "Insert: " . $tmpCname . " " . $confResults[0]->id . "<br/>";
-                            
+
                             $indexes[$tmpCname] = $indexes[$tmpCname] + 1;
                             $conflictedRows = DB::select($conflictsql);
                             $conflictCount = count($conflictedRows);
@@ -475,7 +475,7 @@ class SectionController extends \BaseController {
                                 }
                             }
                             //$str = //$str . "Insert: " . $tmpCname . " " . $confResults[0]->id . "<br/>";
-                            
+
                             $indexes[$tmpCname] = $indexes[$tmpCname] + 1;
                             $conflictedRows = DB::select($conflictsql);
                             $conflictCount = count($conflictedRows);
@@ -490,9 +490,9 @@ class SectionController extends \BaseController {
     }
 
     public function getRating($sectionId){
-        
+
         $results = DB::select('SELECT * FROM course_sections WHERE id = ?', array($sectionId));
-        
+
         if(count($results) == 0){
             return null;
         }
@@ -502,7 +502,7 @@ class SectionController extends \BaseController {
     public function getCourseName($sectionId){
 
         $results = DB::select('SELECT * FROM course_sections WHERE id = ?', array($sectionId));
-        
+
         if(count($results) == 0){
             return null;
         }
