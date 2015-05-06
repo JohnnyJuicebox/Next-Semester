@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS feed (
     user_id int(11) NOT NULL,
     course_id int(11) NOT NULL,
     CONSTRAINT pk_feed_id PRIMARY KEY(id),
-    CONSTRAINT fk_feed_user_id 
+    CONSTRAINT fk_feed_user_id
         FOREIGN KEY (user_id)
         REFERENCES users(id)
         ON DELETE CASCADE,
@@ -122,3 +122,13 @@ CREATE TABLE IF NOT EXISTS feed (
         REFERENCES course(id)
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS wallposts (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+    userId INT(11) NOT NULL,
+    courseId INT(11) NOT NULL,
+    body BLOB,
+    CONSTRAINT pk_comment_id PRIMARY KEY(id),
+    CONSTRAINT fk_comment_userId FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_comment_courseId FOREIGN KEY(courseId) REFERENCES course(id) ON DELETE CASCADE
+) Engine=InnoDB;
