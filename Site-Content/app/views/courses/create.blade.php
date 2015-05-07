@@ -19,6 +19,7 @@ $(document).ready(function(){
         type: 'get',
         data: { cid: courseId },
         success: function(data){
+
             $.each(data, function(key, val){
 
                 var respAuthor = '<div class="author">' + val["username"] + '</div>';
@@ -32,17 +33,30 @@ $(document).ready(function(){
                     type: 'get',
                     data: { postId: pId },
                     success: function(resp){
-                        var comments = '<textarea class="' + pId + '"></textarea>';
+                        var comments = '<textarea class="t' + pId + '"></textarea>';
+			            var commentSubmit  = '<a id="commentSubmit' + pId + '" class="commentButton postfix">Comment</a>';
                         $.each(resp, function(k, v){
                             $('#post' + pId).append('<div class="comment">' + v['info'] +'</div>');
                         });
-                        $('#post' + pId).append(comments);
+                        $('#post' + pId).append(comments + commentSubmit);
+                        $('#commentSubmit' + pId).click(function(){
+                            var tid = this.id.replace('commentSubmit', '');
+                            var cinfo = $('.t' + tid).val();
+                            alert(cinfo);
+                            $.ajax({
+                                url: '/comments',
+                                type: 'post',
+                                data: { pid: tid, commentInfo: cinfo},
+                                success: function(res){
+                                    alert('success');
+                                }
+                            });
+                        });
                     }
                 });
 
-
                 $('#oldContent').prepend(response);
-            })
+            });
         }
     });
 
@@ -58,7 +72,9 @@ $(document).ready(function(){
                 var respAuthor = '<div class="author">' + data["username"] + '</div>';
                 var respInfo = urlify(data["content"]);
                 var respContent = '<div class="info">' + respInfo + '</div>';
-                var response = '<div class="postInfo" id="post' + data["postId"] + '">' + respAuthor + respContent + '</div>';
+                var postComment = '<div class="comment"><textarea class="' + data["postId"] + '"></textarea></div>';
+			    var commentSubmit  = '<a id="commentSubmit' + data["postId"] + '" class="commentButton postfix">Comment</a>';
+                var response = '<div class="postInfo" id="post' + data["postId"] + '">' + respAuthor + respContent + postComment + commentSubmit +'</div>';
                 $('#oldContent').prepend(response);
             }
         });
@@ -92,6 +108,7 @@ $(document).ready(function(){
 
 @section('tailScripts')
 <script>
+
 
 </script>
 @stop
