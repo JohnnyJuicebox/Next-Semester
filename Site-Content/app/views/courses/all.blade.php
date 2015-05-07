@@ -17,20 +17,20 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
 $(function(){
-
-    $('input[type="text"]').keyup(function(){
-        
+	$("input").keypress(function(event) {
+    if (event.which == 13) {
+        event.preventDefault();
         var searchText = $(this).val();
         
-        $('ul > li').each(function(){
-            
-            var currentLiText = $(this).text(),
-                showCurrentLi = currentLiText.indexOf(searchText) !== -1;
-            
-            $(this).toggle(showCurrentLi);
-            
-        });     
-    });
+	$('ul > li').each(function(){
 
+		var currentLiText = $(this).text(),
+		showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+
+		$(this).toggle(showCurrentLi);
+
+		});  
+    }
+	});
 });
 </script>
