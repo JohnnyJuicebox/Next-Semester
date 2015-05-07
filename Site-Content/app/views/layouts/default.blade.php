@@ -11,7 +11,7 @@
     {{ HTML::script('js/moment.min.js'); }}
     {{ HTML::script('js/jquery.min.js'); }}
     {{ HTML::script('js/fullcalendar.min.js'); }}
-    {{ HTML::script('js/vendor/modernizr.js'); }}
+    {{ HTML::script('js/vendor/modernizr.js'); }} 
   </head>
   <body>
   	<div class="page">
