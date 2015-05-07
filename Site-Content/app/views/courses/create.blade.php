@@ -28,27 +28,49 @@ $(document).ready(function(){
                 var pId = val["id"];
                 var response = '<div class="postInfo" id="post' + val["id"] + '">' + respAuthor + respContent + '</div>';
 
+                var comments = '<textarea class="t' + pId + '"></textarea>';
+                var commentSubmit  = '<a id="commentSubmit' + pId + '" class="commentButton postfix">Comment</a>';
+                
+                response = response + '<div class="userComment">' + comments + commentSubmit + '</div>';
+
                 $.ajax({
                     url: '/comments',
                     type: 'get',
                     data: { postId: pId },
                     success: function(resp){
-                        var comments = '<textarea class="t' + pId + '"></textarea>';
-			            var commentSubmit  = '<a id="commentSubmit' + pId + '" class="commentButton postfix">Comment</a>';
+
                         $.each(resp, function(k, v){
-                            $('#post' + pId).append('<div class="comment">' + v['info'] +'</div>');
+                            
+                            var commentAuthor = '<div class="commentAuthor">' + v['username'] + '</div>';
+                            var commentInfo = '<div class="commentInfo">' + v['info'] + '</div>';
+
+                            $('#post' + pId).append('<div class="comment">' + commentAuthor + commentInfo +'</div>');
+
                         });
-                        $('#post' + pId).append(comments + commentSubmit);
+
+                       // $('#post' + pId).append(comments + commentSubmit);
+                        
                         $('#commentSubmit' + pId).click(function(){
                             var tid = this.id.replace('commentSubmit', '');
                             var cinfo = $('.t' + tid).val();
-                            alert(cinfo);
+                            cinfo = urlify(cinfo);
+                            //alert(cinfo);
                             $.ajax({
                                 url: '/comments',
                                 type: 'post',
                                 data: { pid: tid, commentInfo: cinfo},
                                 success: function(res){
-                                    alert('success');
+                                    
+                                   // alert('success');
+                                    
+                                    var commentAuthor = '<div class="commentAuthor">' + res['username'] + '</div>';
+                                    var commentInfo = '<div class="commentInfo">' + res['commentInfo'] + '</div>';
+                                    var comment = '<div class="comment">' + commentAuthor + commentInfo + '</div>';
+
+                                    //alert(commentAuthor);
+
+                                    $('#post' + tid).append(comment);
+                                    $('textarea').val('');
                                 }
                             });
                         });
@@ -72,10 +94,34 @@ $(document).ready(function(){
                 var respAuthor = '<div class="author">' + data["username"] + '</div>';
                 var respInfo = urlify(data["content"]);
                 var respContent = '<div class="info">' + respInfo + '</div>';
-                var postComment = '<div class="comment"><textarea class="' + data["postId"] + '"></textarea></div>';
-			    var commentSubmit  = '<a id="commentSubmit' + data["postId"] + '" class="commentButton postfix">Comment</a>';
-                var response = '<div class="postInfo" id="post' + data["postId"] + '">' + respAuthor + respContent + postComment + commentSubmit +'</div>';
+                var postComment = '<div class="userComment"><textarea class="t' + data["postId"] + '"></textarea>' + '<a id="commentSubmit' + data["postId"] + '" class="commentButton postfix">Comment</a>'+'</div>';
+                var response = '<div class="postInfo" id="post' + data["postId"] + '">' + respAuthor + respContent +'</div>' + postComment;
                 $('#oldContent').prepend(response);
+
+                $('#commentSubmit' + data["postId"]).click(function(){
+                            var tid = this.id.replace('commentSubmit', '');
+                            var cinfo = $('.t' + tid).val();
+                            cinfo = urlify(cinfo);
+                            //alert(cinfo);
+                            $.ajax({
+                                url: '/comments',
+                                type: 'post',
+                                data: { pid: tid, commentInfo: cinfo},
+                                success: function(res){
+                                    
+                                   // alert('success');
+                                    
+                                    var commentAuthor = '<div class="commentAuthor">' + res['username'] + '</div>';
+                                    var commentInfo = '<div class="commentInfo">' + res['commentInfo'] + '</div>';
+                                    var comment = '<div class="comment">' + commentAuthor + commentInfo + '</div>';
+
+                                    //alert(commentAuthor);
+
+                                    $('#post' + tid).append(comment);
+                                    $('textarea').val('');
+                                }
+                            });
+                        });
             }
         });
     });

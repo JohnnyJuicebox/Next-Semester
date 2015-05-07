@@ -13,7 +13,7 @@ WHERE a.startTime <= b.endTime
 AND a.endTime >= b.startTime
 AND a.day = b.day
 AND a.sectionId != b.sectionId
-AND a.schedule_id = b.schedule_id;	
+AND a.schedule_id = b.schedule_id;
 
 -- Get all the course section joined with days
 CREATE VIEW course_sec_info AS
@@ -48,3 +48,9 @@ CREATE VIEW csec AS
 select course.cname, section.id, section.sec_no, section.instructorId
 from course JOIN section
 WHERE course.id = section.courseId;
+
+CREATE VIEW user_wall_post AS
+SELECT w.id AS id, username, courseId, body
+FROM users u, wallposts w
+WHERE w.userId = u.id;
+

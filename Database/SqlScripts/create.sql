@@ -132,3 +132,13 @@ CREATE TABLE IF NOT EXISTS wallposts (
     CONSTRAINT fk_comment_userId FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_comment_courseId FOREIGN KEY(courseId) REFERENCES course(id) ON DELETE CASCADE
 ) Engine=InnoDB;
+
+CREATE TABLE comments (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+    wallPostId INT(11) NOT NULL,
+    userId INT(11) NOT NULL,
+    info BLOB,
+    CONSTRAINT pk_comments_id PRIMARY KEY(id),
+    CONSTRAINT fk_wallPostId FOREIGN KEY(wallPostId) REFERENCES wallposts(id) ON DELETE CASCADE,
+    CONSTRAINT fk_userId FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE
+) Engine=InnoDB;
