@@ -3,6 +3,7 @@
 use NextSemester\Wall\WallPost;
 use NextSemester\Wall\UserWallPost;
 use NextSemester\Wall\WallPostComment;
+use NextSemester\Wall\WallComment;
 use NextSemester\Users\User;
 
 class WallController extends \BaseController {
@@ -63,9 +64,31 @@ class WallController extends \BaseController {
 
         $postId = Input::get('postId');
 
-        $wallComments = WallPostComment::where('wallPostId', '=', $postId)->get()->all();
+        $wallComments = WallComment::where('id', '=', $postId)->get()->all();
 
         return Response::json($wallComments);
+    }
+
+    public function postComments(){
+
+        if(!Session::has('user_id')){
+            return Response::json("Invalid");
+        }
+
+        $postId = Input::get('pid');
+        $userId = Session::get('user_id');
+        $commentInfo = Input::get('commentInfo');
+
+        $wallComment = new WallPostComment;
+
+        $wallComment->wallPostId = $postId;
+        $wallComment->userId = $userId;
+        $username = $this->getUserName($userId);
+        $wallComment->info = $commentInfo;
+
+        $wallComment->save();
+
+        return Response::json(array('username' => $username, 'commentInfo' => $commentInfo));
     }
 }
 

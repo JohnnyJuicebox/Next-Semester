@@ -128,6 +128,11 @@ Route::get('comments/', [
     'uses' => 'WallController@getComments'
 ]);
 
+Route::post('comments/', [
+    'as' => 'comments_post_wall_path',
+    'uses' => 'WallController@postComments'
+]);
+
 App::after(function($request, $response)
 {
     $response->headers->set('Cache-Control','nocache, no-store, max-age=0, must-revalidate');
