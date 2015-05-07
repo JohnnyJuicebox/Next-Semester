@@ -22,16 +22,16 @@ $(document).ready(function(){
 
             $.each(data, function(key, val){
 
-                var respAuthor = '<div class="author">' + val["username"] + '</div>';
+                var respAuthor = '<div class="row"><div class="author large-10 columns">' + val["username"] + ' says: ' + '</div><div class="author large-2 columns"></div></div>';
                 var respInfo = urlify(val["body"]);
-                var respContent = '<div class="info">' + respInfo + '</div>';
+                var respContent = '<div class="row"><div class="info large-12 columns">' + respInfo + '</div></div>';
                 var pId = val["id"];
-                var response = '<div class="postInfo" id="post' + val["id"] + '">' + respAuthor + respContent + '</div>';
+                var response = '<div class="postInfo" id="post' + val["id"] + '">' + '<div class="main-comment">' + respAuthor + respContent + '</div>' + '</div>';
 
-                var comments = '<textarea class="t' + pId + '"></textarea>';
-                var commentSubmit  = '<a id="commentSubmit' + pId + '" class="commentButton postfix">Comment</a>';
+                var comments = '<div class="large-10 columns"><label><textarea placeholder="Add Reply" class="t' + pId + '"></textarea></label></div>';
+                var commentSubmit  = '<div class="large-2 columns"><a id="commentSubmit' + pId + '" class="commentButton button small radius">Reply</a></div>';
                 
-                response = response + '<div class="userComment">' + comments + commentSubmit + '</div>';
+                response = response + '<div class="userComment"><div class="row">' + comments + commentSubmit + '</div></div>';
 
                 $.ajax({
                     url: '/comments',
@@ -41,7 +41,7 @@ $(document).ready(function(){
 
                         $.each(resp, function(k, v){
                             
-                            var commentAuthor = '<div class="commentAuthor">' + v['username'] + '</div>';
+                            var commentAuthor = '<div class="commentAuthor">' + v['username'] + ' replies:' + '</div>';
                             var commentInfo = '<div class="commentInfo">' + v['info'] + '</div>';
 
                             $('#post' + pId).append('<div class="comment">' + commentAuthor + commentInfo +'</div>');
@@ -63,7 +63,7 @@ $(document).ready(function(){
                                     
                                    // alert('success');
                                     
-                                    var commentAuthor = '<div class="commentAuthor">' + res['username'] + '</div>';
+                                    var commentAuthor = '<div class="commentAuthor">' + res['username'] + ' replies:' + '</div>';
                                     var commentInfo = '<div class="commentInfo">' + res['commentInfo'] + '</div>';
                                     var comment = '<div class="comment">' + commentAuthor + commentInfo + '</div>';
 
@@ -78,6 +78,7 @@ $(document).ready(function(){
                 });
 
                 $('#oldContent').prepend(response);
+                
             });
         }
     });
@@ -91,10 +92,10 @@ $(document).ready(function(){
             data: { contentInfo: info, cid: courseId},
             success: function(data){
                 $('textarea').val('');
-                var respAuthor = '<div class="author">' + data["username"] + '</div>';
+                var respAuthor = '<div class="author">' + data["username"] + ' says:' +'</div>';
                 var respInfo = urlify(data["content"]);
                 var respContent = '<div class="info">' + respInfo + '</div>';
-                var postComment = '<div class="userComment"><textarea class="t' + data["postId"] + '"></textarea>' + '<a id="commentSubmit' + data["postId"] + '" class="commentButton postfix">Comment</a>'+'</div>';
+                var postComment = '<div class="userComment"><textarea class="t' + data["postId"] + '" ></textarea>' + '<a id="commentSubmit' + data["postId"] + '" class="commentButton postfix">Comment</a>'+'</div>';
                 var response = '<div class="postInfo" id="post' + data["postId"] + '">' + respAuthor + respContent +'</div>' + postComment;
                 $('#oldContent').prepend(response);
 
@@ -131,24 +132,34 @@ $(document).ready(function(){
 
 @section('content')
 <div id="row">
-	<div class="large-12 columns">
-		<div id="contentHeader">
-			<h2 class="subheader">{{ $courseInfo->cname }} </h2>
-			{{ Form::hidden('val', $courseInfo->id) }}
-			<p>{{ $courseInfo->cdesc }}</p>
-		</div>
-		<div id="contentInfo">
-			<p> {{ $courseInfo->cinfo }} </p>
-		</div>
-		<div class="contentForm">
-            <div class="userContent">
-                <textarea></textarea>
-			</div>
-			<a id="submit" class="button postfix">Submit</a>
-		</div>
-        <div id="oldContent">
+    <div class="large-12 columns">
+        <div id="contentHeader">
+            <h2 class="subheader">{{ $courseInfo->cname }} </h2>
+            {{ Form::hidden('val', $courseInfo->id) }}
+            <p>{{ $courseInfo->cdesc }}</p>
         </div>
-	</div>
+        <div id="contentInfo">
+            <p> {{ $courseInfo->cinfo }} </p>
+        </div>
+        <div class="contentForm">
+            <br>
+            <h3>Comments</h3>
+            <div class="userContent">
+                <div class="row">
+                    <div class="large-12 columns">
+                    <label>
+                        <textarea style="height: 130px;" placeholder="Add Comment"></textarea>
+                    </label>
+                    </div>
+                    <div class="large-3 columns">
+                        <a id="submit" class="button postfix">Comment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="oldContent" class="panel radius border-comment"></div>
+    </div>
 </div>
 @stop
 
