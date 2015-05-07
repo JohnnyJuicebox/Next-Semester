@@ -140,3 +140,8 @@ App::after(function($request, $response)
     $response->headers->set('Expires','Fri, 01 Jan 1990 00:00:00 GMT');
 });
 
+Route::get('profile', [
+	'as' => 'profile_path',
+	'uses' => 'HomeController@profile'
+]);
+

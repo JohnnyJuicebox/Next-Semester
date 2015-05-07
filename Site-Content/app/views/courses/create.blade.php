@@ -22,14 +22,14 @@ $(document).ready(function(){
 
             $.each(data, function(key, val){
 
-                var respAuthor = '<div class="row"><div class="author large-10 columns">' + val["username"] + ' says: ' + '</div><div class="author large-2 columns"></div></div>';
+                var respAuthor = '<div class="row"><div class="author large-10 columns">' + val["username"] + ' says: ' + '</div><div class="author large-2 columns"><a id="showReply" href="#">Reply</a></div></div>';
                 var respInfo = urlify(val["body"]);
                 var respContent = '<div class="row"><div class="info large-12 columns">' + respInfo + '</div></div>';
                 var pId = val["id"];
                 var response = '<div class="postInfo" id="post' + val["id"] + '">' + '<div class="main-comment">' + respAuthor + respContent + '</div>' + '</div>';
 
                 var comments = '<div class="large-10 columns"><label><textarea placeholder="Add Reply" class="t' + pId + '"></textarea></label></div>';
-                var commentSubmit  = '<div class="large-2 columns"><a id="commentSubmit' + pId + '" class="commentButton button small radius">Reply</a></div>';
+                var commentSubmit  = '<div class="large-2 columns"><a id="commentSubmit' + pId + '" class="commentButton button small radius">Comment</a></div>';
                 
                 response = response + '<div class="userComment"><div class="row">' + comments + commentSubmit + '</div></div>';
 
@@ -78,14 +78,30 @@ $(document).ready(function(){
                 });
 
                 $('#oldContent').prepend(response);
+                $( ".userComment" ).hide();
+                var display = false;
+                $( "#showReply").click(function(){
+                    $( ".userComment" ).toggle( display );
+
+                    if ( display === true ) {
+                  $( ".userComment" ).hide();
+                  display = false;
+                } else if ( display === false ) {
+                  $( ".userComment" ).show();
+                  display = true;
+                }
+                });
                 
+
             });
         }
     });
 
+    
+
     // Once a user submits a request post it and then prepend it to the wall
     $('a#submit').click(function(){
-        var info = $('.userContent > textarea').val();
+        var info = $('.userContent > div:nth-child(1) > div:nth-child(1) > label:nth-child(1) > textarea:nth-child(1)').val();
         $.ajax({
             url: '/wall',
             type: 'post',
@@ -100,29 +116,29 @@ $(document).ready(function(){
                 $('#oldContent').prepend(response);
 
                 $('#commentSubmit' + data["postId"]).click(function(){
-                            var tid = this.id.replace('commentSubmit', '');
-                            var cinfo = $('.t' + tid).val();
-                            cinfo = urlify(cinfo);
-                            //alert(cinfo);
-                            $.ajax({
-                                url: '/comments',
-                                type: 'post',
-                                data: { pid: tid, commentInfo: cinfo},
-                                success: function(res){
-                                    
-                                   // alert('success');
-                                    
-                                    var commentAuthor = '<div class="commentAuthor">' + res['username'] + '</div>';
-                                    var commentInfo = '<div class="commentInfo">' + res['commentInfo'] + '</div>';
-                                    var comment = '<div class="comment">' + commentAuthor + commentInfo + '</div>';
+                    var tid = this.id.replace('commentSubmit', '');
+                    var cinfo = $('.t' + tid).val();
+                    cinfo = urlify(cinfo);
+                    //alert(cinfo);
+                    $.ajax({
+                        url: '/comments',
+                        type: 'post',
+                        data: { pid: tid, commentInfo: cinfo},
+                        success: function(res){
+                            
+                           // alert('success');
+                            
+                            var commentAuthor = '<div class="commentAuthor">' + res['username'] + '</div>';
+                            var commentInfo = '<div class="commentInfo">' + res['commentInfo'] + '</div>';
+                            var comment = '<div class="comment">' + commentAuthor + commentInfo + '</div>';
 
-                                    //alert(commentAuthor);
+                            //alert(commentAuthor);
 
-                                    $('#post' + tid).append(comment);
-                                    $('textarea').val('');
-                                }
-                            });
-                        });
+                            $('#post' + tid).append(comment);
+                            $('textarea').val('');
+                        }
+                    });
+                });
             }
         });
     });

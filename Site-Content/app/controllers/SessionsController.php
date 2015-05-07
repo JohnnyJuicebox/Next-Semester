@@ -25,6 +25,7 @@ class SessionsController extends \BaseController {
 	}
 
 
+
 	/**
 	 * Store a newly created resource in storage.
 	 *

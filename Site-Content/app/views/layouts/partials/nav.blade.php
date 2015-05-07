@@ -20,10 +20,9 @@
 		<li><label>Sections</label></li> 
 		<li>{{ link_to_route('schedule_path', 'Auto Schedule', null, ['class' => '']) }}</li> 
 		<li>{{ link_to_route('schedule_manual_path', 'Manual Schedule', null, ['class' => '']) }}</li> 
-		<li><a href="#">Friends</a></li> 
 		<li>{{ link_to_route('course_all_path', 'Classes', null, ['class' => '']) }}</li> 
-		<li><a href="#">Profile</a></li>
-		<li><a href="#">Settings</a></li>
+		<li>{{ link_to_route('profile_path', 'Profile', null, ['class' => ''])
+		}}</li>
 		<li>{{ link_to_route('logout_path', 'Log Out', null, ['class' => '']) }}</li>
 	</ul> 
 </aside> <!-- Right-Side Menu End -->

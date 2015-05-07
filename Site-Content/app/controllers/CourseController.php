@@ -24,5 +24,6 @@ class CourseController extends \BaseController {
 
     	return View::make('courses.all')->with('courses', $courses);
     }
+
 }
 
