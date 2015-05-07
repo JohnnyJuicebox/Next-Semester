@@ -24,6 +24,24 @@
 					{{ Form::text('email', null, ['class' => 'form-control']) }}
 				</div>
 
+				<!-- Fname Input -->
+				<div class="form-group">
+					{{ Form::label('fname', 'First Name:') }}
+					{{ Form::text('fname', null, ['class' => 'form-control']) }}
+				</div>
+
+				<!-- Lname Input -->
+				<div class="form-group">
+					{{ Form::label('lname', 'Last Name:') }}
+					{{ Form::text('lname', null, ['class' => 'form-control']) }}
+				</div>
+
+				<!-- Major Input -->
+				<div class="form-group">
+					{{ Form::label('major', 'Major:') }}
+					{{ Form::text('major', null, ['class' => 'form-control']) }}
+				</div>
+
 				<!-- Password Input -->
 				<div class="form-group">
 					{{ Form::label('password', 'Password:') }}
@@ -35,6 +53,8 @@
 					{{ Form::label('password_confirmation', 'Password Confirmation:') }}
 					{{ Form::password('password_confirmation', null, ['class' => 'form-control']) }}
 				</div>
+
+
 
 				<!-- Submit -->
 				<div class="form-group">
