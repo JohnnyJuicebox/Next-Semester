@@ -1,5 +1,7 @@
 <?php
 
+use NextSemester\Users\User;
+
 class HomeController extends BaseController {
 
 	/*
@@ -22,6 +24,9 @@ class HomeController extends BaseController {
 
 	public function profile()
     {
-        return View::make('profile.create');
+    	$userInfo = User::where('id', '=', Session::get('user_id'))->get()->first();
+
+
+        return View::make('profile.create')->with('userInfo', $userInfo);
     }
 }
